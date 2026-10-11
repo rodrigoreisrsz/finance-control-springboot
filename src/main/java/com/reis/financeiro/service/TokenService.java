@@ -31,7 +31,7 @@ public class TokenService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-    public String getSubject(String tokenJWT){
-        return Jwts.parserBuilder
-    }
+//    //public String getSubject(String tokenJWT){
+//     /   return Jwts.parserBuilder
+//    //}
 }
