@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — Finanças Pessoais</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
 </head>
 <body>
 <div class="login-page">
@@ -12,20 +13,26 @@
         <p class="dashboard__month">Finanças Pessoais</p>
         <h1 class="login-card__titulo">Entrar</h1>
 
+        <p class="login-card__sucesso" id="loginSucesso" role="status"></p>
+
         <form id="formLogin" class="modal__form">
-            <label class="campo">
-                <span>Usuário</span>
-                <input type="text" id="loginNome" required autocomplete="username">
-            </label>
+            <div class="campo">
+                <label for="loginEmail">E-mail</label>
+                <input type="email" id="loginEmail" required autocomplete="email" autofocus>
+            </div>
 
-            <label class="campo">
-                <span>Senha</span>
-                <input type="password" id="loginSenha" required autocomplete="current-password">
-            </label>
+            <div class="campo">
+                <label for="loginSenha">Senha</label>
+                <div class="campo__senha">
+                    <input type="password" id="loginSenha" required autocomplete="current-password">
+                    <button type="button" class="campo__toggle" id="toggleLoginSenha"
+                            aria-pressed="false" aria-label="Mostrar senha">Mostrar</button>
+                </div>
+            </div>
 
-            <p class="modal__erro" id="loginErro"></p>
+            <p class="modal__erro" id="loginErro" role="alert"></p>
 
-            <button type="submit" class="btn-primary modal__submit">Entrar</button>
+            <button type="submit" class="btn-primary modal__submit" id="btnLogin">Entrar</button>
         </form>
 
         <p class="login-card__rodape">
