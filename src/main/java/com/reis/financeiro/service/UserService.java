@@ -24,10 +24,13 @@ public class UserService {
 
     private AuthenticationManager authenticationManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    private final TokenService tokenService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,  TokenService tokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
 
     }
 
@@ -45,7 +48,8 @@ public class UserService {
 
         UserJWT userJWT = (UserJWT) authentication.getPrincipal();
         User user = userJWT.getUser();
-        return new UserResponse(user);
+        String jwt = tokenService.generateToken(user);
+        return new UserResponse(user, jwt);
 
 
     }
