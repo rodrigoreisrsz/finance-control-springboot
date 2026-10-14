@@ -38,6 +38,7 @@ public class RegistroController {
     //@ResponseStatus(HttpStatus.CREATED) tbm retona 201 CREATED
     public ResponseEntity<RegistroResponse> criar(@RequestBody @Valid RegistroCreateDTO registroCreate){
         RegistroResponse response = service.adicionarRegistro(registroCreate.getUserId(), registroCreate.getNome(),  registroCreate.getValor(), registroCreate.getDescricao(), registroCreate.getData(), registroCreate.getTipoRegistro());
+        System.out.println("POST /registros chegou ao controller");
         return new ResponseEntity(response, HttpStatus.CREATED); // retorna 201 - CREATED
     }
     @DeleteMapping("/{id}")

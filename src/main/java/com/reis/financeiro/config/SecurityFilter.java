@@ -28,6 +28,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println(">>> SECURITY FILTER EXECUTADO <<<");
+        System.out.println("Método: " + request.getMethod());
+        System.out.println("URI: " + request.getRequestURI());
         String authorizationHeader = request.getHeader("Authorization");
         if(authorizationHeader == null){
             System.out.println("Cabeçalho de Autorização nulo.");
@@ -44,6 +47,16 @@ public class SecurityFilter extends OncePerRequestFilter {
                     userDetails.getAuthorities()
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println(
+                    "Autenticação criada: " +
+                            SecurityContextHolder.getContext()
+                                    .getAuthentication().isAuthenticated()
+            );
+            System.out.println(
+                    "Autenticado: " +
+                            SecurityContextHolder.getContext()
+                                    .getAuthentication().isAuthenticated()
+            );
         }else{
             System.out.println("Cabeçalho authorization ausente ou inválido.");
 
