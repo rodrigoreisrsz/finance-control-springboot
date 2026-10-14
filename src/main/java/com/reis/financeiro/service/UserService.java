@@ -40,7 +40,8 @@ public class UserService {
         String email = user.getEmail();
         User userNovo = new User(name, email, password);
         User userSalvo = userRepository.save(userNovo);
-        return new UserResponse(userSalvo);
+        String jwtToken = tokenService.generateToken(userSalvo);
+        return new UserResponse(userSalvo, jwtToken);
     }
     public UserResponse login(String email, String password){
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);

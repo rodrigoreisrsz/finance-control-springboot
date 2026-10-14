@@ -42,8 +42,8 @@ public class TokenService {
             return subject;
 
 
-        }catch (RuntimeException e){
-            throw new RuntimeException(e);
+        }catch (JwtException e) {
+            throw new RuntimeException("Token JWT inválido ou expirado", e);
         }
 
     }

@@ -22,12 +22,13 @@ public class UserController {
     }
     @PostMapping
     public ResponseEntity<UserResponse> cadastrar(@RequestBody @Valid UserCreateDTO userCreate){
+        System.out.println("request chegou");
         UserResponse response = userService.cadastrar(userCreate);
         return ResponseEntity.ok(response);
-       
+
     }
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody @Valid LoginDTO loginDTO){
+    public ResponseEntity<UserResponse> login(@RequestBody  LoginDTO loginDTO){
         UserResponse response = userService.login(loginDTO.getEmail(), loginDTO.getPassword());
         return ResponseEntity.ok(response);
     }
