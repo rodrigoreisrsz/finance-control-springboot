@@ -54,4 +54,5 @@ public class UserJWT implements UserDetails {
     public User getUser() {
         return user;
     }
+
 }

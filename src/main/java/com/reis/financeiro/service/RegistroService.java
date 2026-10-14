@@ -34,7 +34,7 @@ import java.util.List;
             return registros;
         }
 
-        public RegistroResponse adicionarRegistro(Long userId, String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistro){
+        public RegistroResponse adicionarRegistro( Long userId, String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistro){
             User userExists = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User inexistente."));
             Registro registro = new Registro(userExists, nome, valor,  descricao, data, tipoRegistro);
 
@@ -43,8 +43,8 @@ import java.util.List;
             return new RegistroResponse(registroSalvo);
         }
 
-        public void deletarRegistro(long id){
-            Registro registro = repository.findById(id)
+        public void deletarRegistro(long id, Long userId){
+            Registro registro = repository.findByIdAndUserId(id, userId)
                     .orElseThrow(() -> new RuntimeException("Registro não encontrado."));
 
             TipoRegistro tipoInvertido = (registro.getTipoRegistro() == TipoRegistro.GANHO) ? TipoRegistro.GASTO : TipoRegistro.GANHO;
@@ -54,12 +54,12 @@ import java.util.List;
             repository.delete(registro);
 
         }
-        public RegistroResponse buscarPorId(long id){
-            Registro registro = repository.findById(id).orElseThrow(()-> new RegistroNotFoundException());
+        public RegistroResponse buscarPorId(long id, long userId){
+            Registro registro = repository.findByIdAndUserId(id, userId).orElseThrow(()-> new RegistroNotFoundException());
             return new RegistroResponse(registro);
         }
-        public RegistroResponse editar(long id, String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistroDTO ){
-            Registro registroExistente = repository.findById(id)
+        public RegistroResponse editar(long id, long userId,  String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistroDTO ){
+            Registro registroExistente = repository.findByIdAndUserId(id, userId)
                     .orElseThrow(() -> new RuntimeException("Registro não encontrado."));
 
 
