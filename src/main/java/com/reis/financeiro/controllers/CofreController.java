@@ -4,6 +4,7 @@ import com.reis.financeiro.dto.request.AporteCreateDTO;
 import com.reis.financeiro.dto.request.CofreCreateDTO;
 import com.reis.financeiro.dto.response.CofreResponse;
 
+import com.reis.financeiro.entities.Aporte;
 import com.reis.financeiro.security.UserJWT;
 import com.reis.financeiro.service.CofreService;
 import jakarta.validation.Valid;
@@ -40,11 +41,7 @@ public class CofreController {
         return ResponseEntity.ok(response);
 
     }
-    @PostMapping("/aportes")
-    public ResponseEntity<CofreResponse> criarAporte(@RequestBody @Valid AporteCreateDTO aporteCreateDTO,  @AuthenticationPrincipal UserJWT userAutheticated){
-        CofreResponse response =  service.criarAporte(userAutheticated.getUser().getId(), aporteCreateDTO.getValor(), aporteCreateDTO.getData());
-        return  ResponseEntity.ok(response);
-    }
+
     @PutMapping("/{id}")
     public ResponseEntity<CofreResponse> editar(@PathVariable long id,
                                                 @RequestBody CofreCreateDTO cofreCreateDTO,
@@ -58,5 +55,19 @@ public class CofreController {
     public void deletar(@PathVariable long id, @AuthenticationPrincipal UserJWT userAutheticated){
         service.deletar(id, userAutheticated.getUser().getId());
     }
+//    @GetMapping
+//    public List<Aporte> findAportes(@AuthenticationPrincipal UserJWT userAuthenticated){
+//        service.
+//    }
+    @PostMapping("/aportes")
+    public ResponseEntity<CofreResponse> criarAporte(@RequestBody @Valid AporteCreateDTO aporteCreateDTO,  @AuthenticationPrincipal UserJWT userAutheticated){
+        CofreResponse response =  service.criarAporte(userAutheticated.getUser().getId(), aporteCreateDTO.getValor(), aporteCreateDTO.getData());
+        return  ResponseEntity.ok(response);
+    }
+    @DeleteMapping("/aports{id}")
+    public void deletarAporte(@PathVariable long id, @AuthenticationPrincipal UserJWT userAutheticated){
+        service.deletarAporte(id, userAutheticated.getUser().getId());
+    }
+
 
 }

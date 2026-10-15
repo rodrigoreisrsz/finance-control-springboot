@@ -67,8 +67,9 @@ public class CofreService {
         return new CofreResponse(aporte.getCofre());
 
     }
-    public void deletarAporte(Aporte aporte){
-        Aporte aporteExists = aporteRepository.findById(aporte.getId()).orElseThrow(() -> new RuntimeException("Este aporte não existe"));
+    public void deletarAporte(long id, long userId){
+        Aporte aporteExists = aporteRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new RuntimeException("Este aporte não existe"));
         aporteRepository.delete(aporteExists);
 
     }
