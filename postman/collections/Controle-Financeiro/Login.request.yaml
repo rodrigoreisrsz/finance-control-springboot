@@ -1,0 +1,26 @@
+$kind: http-request
+name: Login
+order: 1000
+url: '{{base_url}}/user/login'
+method: POST
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{user_email}}",
+      "password": "{{user_password}}"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      const res = pm.response.json();
+      if (res.jwt) {
+          pm.environment.set('token', res.jwt);
+          console.log('Token salvo com sucesso.');
+      } else {
+          console.error('jwt não encontrado na resposta:', JSON.stringify(res));
+      }

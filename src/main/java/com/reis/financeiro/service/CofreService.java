@@ -10,10 +10,12 @@ import com.reis.financeiro.repository.SaldoRepository;
 import com.reis.financeiro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CofreService {
@@ -35,10 +37,18 @@ public class CofreService {
                 .toList();
         return metas;
     }
+    @Transactional(readOnly = true)
     public CofreResponse buscarPorId(long id, long userId){
         Cofre cofre = repository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new RuntimeException("Este cofre de metas não existe."));
-        return  new CofreResponse(cofre);
+
+        BigDecimal valorAtual = cofre.getAportes()
+                .stream()
+                .map(Aporte::getValor)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new CofreResponse(cofre, valorAtual);
     }
     public CofreResponse criarCofre(Long userId, String nome, BigDecimal meta, BigDecimal deposito){
         User userExists = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User inexistente."));
@@ -60,21 +70,32 @@ public class CofreService {
                 .orElseThrow(() -> new RuntimeException("Este cofre de metas não existe."));
         repository.delete(cofre);
     }
-    public CofreResponse criarAporte(Long cofreId, BigDecimal valor, LocalDate data){
-        Cofre cofreExists =  repository.findById(cofreId).orElseThrow(() -> new RuntimeException("Este cofre de metas não existe."));
-        Aporte aporte = new Aporte(valor, data, cofreExists);
+    @Transactional
+    public CofreResponse criarAporte(Long cofreId, BigDecimal valor, LocalDate data) {
+        Cofre cofre = repository.findById(cofreId)
+                .orElseThrow(() ->
+                        new RuntimeException("Este cofre de metas não existe.")
+                );
+
+        Aporte aporte = new Aporte(valor, data, cofre);
         aporteRepository.save(aporte);
-        return new CofreResponse(aporte.getCofre());
 
+        BigDecimal valorAtual = calcularTotal(
+                cofreId,
+                cofre.getUser().getId()
+        );
+
+        return new CofreResponse(cofre, valorAtual);
     }
-    public void deletarAporte(long id, long userId){
-        Aporte aporteExists = aporteRepository.findByIdAndUserId(id, userId)
+    @Transactional
+    public void deletarAporte(long id, long userId) {
+        Aporte aporteExists =  aporteRepository.findByIdAndCofreUserId(id, userId)
                 .orElseThrow(() -> new RuntimeException("Este aporte não existe"));
-        aporteRepository.delete(aporteExists);
 
+        aporteRepository.delete(aporteExists);
     }
-    public BigDecimal calcularTotal(Long cofreId){
-        List<Aporte> aportes = aporteRepository.findByCofreId(cofreId).stream()
+    public BigDecimal calcularTotal(Long cofreId, long userId){
+        List<Aporte> aportes = aporteRepository.findByCofreIdAndCofreUserId(cofreId, userId).stream()
                 .toList();
         BigDecimal valorTotal = aportes.stream()
                 .map(Aporte::getValor)

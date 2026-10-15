@@ -28,5 +28,6 @@ public class Aporte {
         this.data = data;
         this.cofre = cofre;
     }
+    public Aporte(){}
 
 }

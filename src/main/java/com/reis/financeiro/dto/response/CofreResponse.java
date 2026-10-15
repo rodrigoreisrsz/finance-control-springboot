@@ -12,7 +12,13 @@ public class CofreResponse {
     private BigDecimal meta;
     private BigDecimal valorAtual;
 
-    public CofreResponse(Cofre cofre) {
+    public CofreResponse(Cofre cofre, BigDecimal valorAtual) {
+        this.id = cofre.getId();
+        this.nome = cofre.getNome();
+        this.meta = cofre.getMeta();
+        this.valorAtual = valorAtual;
+    }
+    public CofreResponse(Cofre cofre){
         this.id = cofre.getId();
         this.nome = cofre.getNome();
         this.meta = cofre.getMeta();

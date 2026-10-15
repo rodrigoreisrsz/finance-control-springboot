@@ -34,4 +34,11 @@ public class Cofre {
 
 
    public Cofre(){}
+
+    public BigDecimal getValorAtual() {
+        return aportes.stream()
+                .map(Aporte::getValor)
+                .filter(java.util.Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }

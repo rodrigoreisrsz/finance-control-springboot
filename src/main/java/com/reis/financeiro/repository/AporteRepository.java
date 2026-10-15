@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AporteRepository extends JpaRepository<Aporte, Long> {
-    List<Aporte> findByCofreId(Long cofreId);
-    Optional<Registro> findByIdAndUserId(
-            Long id,
-            Long userId
-    );
+
+    Optional<Aporte> findByIdAndCofreUserId(Long id, Long userId);
+
+    List<Aporte> findByCofreIdAndCofreUserId(Long cofreId, Long userId);
 }

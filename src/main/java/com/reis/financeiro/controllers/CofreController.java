@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class CofreController {
         return service.listarMetas(userAutheticated.getUser().getId());
     }
     @GetMapping("/{id}")
+
     public ResponseEntity<CofreResponse> buscarPorId(@PathVariable Long id, @AuthenticationPrincipal UserJWT userAutheticated){
         CofreResponse response = service.buscarPorId(id, userAutheticated.getUser().getId());
         return ResponseEntity.ok(response);
@@ -61,7 +63,7 @@ public class CofreController {
 //    }
     @PostMapping("/aportes")
     public ResponseEntity<CofreResponse> criarAporte(@RequestBody @Valid AporteCreateDTO aporteCreateDTO,  @AuthenticationPrincipal UserJWT userAutheticated){
-        CofreResponse response =  service.criarAporte(userAutheticated.getUser().getId(), aporteCreateDTO.getValor(), aporteCreateDTO.getData());
+        CofreResponse response =  service.criarAporte(aporteCreateDTO.getCofreId(), aporteCreateDTO.getValor(), aporteCreateDTO.getData());
         return  ResponseEntity.ok(response);
     }
     @DeleteMapping("/aports{id}")
