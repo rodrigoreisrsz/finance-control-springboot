@@ -35,8 +35,8 @@ public class CofreService {
                 .toList();
         return metas;
     }
-    public CofreResponse buscarPorId(long id){
-        Cofre cofre = repository.findById(id)
+    public CofreResponse buscarPorId(long id, long userId){
+        Cofre cofre = repository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new RuntimeException("Este cofre de metas não existe."));
         return  new CofreResponse(cofre);
     }
@@ -46,8 +46,8 @@ public class CofreService {
         repository.save(cofre);
         return new CofreResponse(cofre);
     }
-    public CofreResponse editar(Long id, String nome, BigDecimal meta){
-        Cofre cofreExistente = repository.findById(id)
+    public CofreResponse editar(Long id, long userId, String nome, BigDecimal meta){
+        Cofre cofreExistente = repository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new RuntimeException("Cofre não encontrado."));
 
         cofreExistente.setNome(nome);
@@ -55,8 +55,8 @@ public class CofreService {
         repository.save(cofreExistente);
         return new CofreResponse(cofreExistente);
     }
-    public void deletar(Long id){
-        Cofre cofre = repository.findById(id)
+    public void deletar(Long id, long userId){
+        Cofre cofre = repository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new RuntimeException("Este cofre de metas não existe."));
         repository.delete(cofre);
     }
