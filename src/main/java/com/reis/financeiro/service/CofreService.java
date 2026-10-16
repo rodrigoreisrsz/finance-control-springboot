@@ -32,10 +32,16 @@ public class CofreService {
         this.aporteRepository = aporteRepository;
     }
     public List<CofreResponse> listarMetas(Long userId){
-        List<CofreResponse> metas = repository.findByUserId(userId).stream()
-                .map(m -> new CofreResponse(m))
+        return repository.findByUserId(userId).stream()
+                .map(cofre -> {
+                    BigDecimal valorAtual = calcularTotal(
+                            cofre.getId(),
+                            userId
+                    );
+
+                    return new CofreResponse(cofre, valorAtual);
+                })
                 .toList();
-        return metas;
     }
     @Transactional(readOnly = true)
     public CofreResponse buscarPorId(long id, long userId){
