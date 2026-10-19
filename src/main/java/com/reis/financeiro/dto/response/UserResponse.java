@@ -15,12 +15,12 @@ public class UserResponse {
 
     public UserResponse(User user, String jwt) {
         this.name = user.getName();
-        this.id = user.getId();
+        this.id = user.getUserId();
         this.jwt = jwt;
     }
     public UserResponse(User user) {
         this.name = user.getName();
-        this.id = user.getId();
+        this.id = user.getUserId() ;
     }
     public UserResponse() {
 

@@ -1,0 +1,24 @@
+$kind: http-request
+description: ""
+url: http://localhost:8080/user/login
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \  \"email\": \"rodrigo2@gmail.com\",\r
+
+    \  \"password\": \"12345678\"\r
+
+    \    \r
+
+    }\r
+
+    \  \r\n"
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 3000

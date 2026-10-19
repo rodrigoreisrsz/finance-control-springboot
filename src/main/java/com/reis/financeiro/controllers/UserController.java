@@ -22,7 +22,7 @@ public class UserController {
     }
     @PostMapping
     public ResponseEntity<UserResponse> cadastrar(@RequestBody @Valid UserCreateDTO userCreate){
-        System.out.println("request chegou");
+
         UserResponse response = userService.cadastrar(userCreate);
         return ResponseEntity.ok(response);
 

@@ -39,7 +39,7 @@ public class SaldoService {
 
     }
     public void atualizarSaldo(User user, BigDecimal valor, TipoRegistro tipo){
-        Saldo saldo = buscaOuCriaSaldo(user.getId());
+        Saldo saldo = buscaOuCriaSaldo(user.getUserId() );
         if(tipo == TipoRegistro.GANHO){
             saldo.setSaldo(saldo.getSaldo().add(valor));
         }else{

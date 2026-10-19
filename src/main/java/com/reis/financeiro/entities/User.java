@@ -20,7 +20,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
     @Column(nullable = false)
     private String name;
     @JsonIgnore
@@ -31,8 +31,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    public User(Long id, String name,String email, String password) {
-        this.id = id;
+    public User(Long userId, String name,String email, String password) {
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;

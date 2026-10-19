@@ -27,19 +27,19 @@ public class CofreController {
     }
     @GetMapping
     public List<CofreResponse> listarMetas(@AuthenticationPrincipal UserJWT userAutheticated){
-        return service.listarMetas(userAutheticated.getUser().getId());
+        return service.listarMetas(userAutheticated.getUser().getUserId() );
     }
     @GetMapping("/{id}")
 
     public ResponseEntity<CofreResponse> buscarPorId(@PathVariable Long id, @AuthenticationPrincipal UserJWT userAutheticated){
-        CofreResponse response = service.buscarPorId(id, userAutheticated.getUser().getId());
+        CofreResponse response = service.buscarPorId(id, userAutheticated.getUser().getUserId() );
         return ResponseEntity.ok(response);
     }
 
 
     @PostMapping
     public ResponseEntity<CofreResponse> criar (@RequestBody @Valid CofreCreateDTO cofreCreateDTO, @AuthenticationPrincipal UserJWT userAutheticated){
-        CofreResponse response = service.criarCofre(userAutheticated.getUser().getId(), cofreCreateDTO.getNome(), cofreCreateDTO.getMeta(), cofreCreateDTO.getDeposito());
+        CofreResponse response = service.criarCofre(userAutheticated.getUser().getUserId() , cofreCreateDTO.getNome(), cofreCreateDTO.getMeta(), cofreCreateDTO.getDeposito());
         return ResponseEntity.ok(response);
 
     }
@@ -48,14 +48,14 @@ public class CofreController {
     public ResponseEntity<CofreResponse> editar(@PathVariable long id,
                                                 @RequestBody CofreCreateDTO cofreCreateDTO,
                                                 @AuthenticationPrincipal UserJWT userAutheticated){
-        CofreResponse response = service.editar(id, userAutheticated.getUser().getId(),
+        CofreResponse response = service.editar(id, userAutheticated.getUser().getUserId() ,
                 cofreCreateDTO.getNome(),
                 cofreCreateDTO.getMeta());
         return ResponseEntity.ok(response);
     }
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable long id, @AuthenticationPrincipal UserJWT userAutheticated){
-        service.deletar(id, userAutheticated.getUser().getId());
+        service.deletar(id, userAutheticated.getUser().getUserId());
     }
 //    @GetMapping
 //    public List<Aporte> findAportes(@AuthenticationPrincipal UserJWT userAuthenticated){
@@ -63,12 +63,12 @@ public class CofreController {
 //    }
     @PostMapping("/aportes")
     public ResponseEntity<CofreResponse> criarAporte(@RequestBody @Valid AporteCreateDTO aporteCreateDTO,  @AuthenticationPrincipal UserJWT userAutheticated){
-        CofreResponse response =  service.criarAporte(aporteCreateDTO.getCofreId(), aporteCreateDTO.getValor(), aporteCreateDTO.getData());
+        CofreResponse response =  service.criarAporte(aporteCreateDTO.getCofreId(), userAutheticated.getUser().getUserId(), aporteCreateDTO.getValor(), aporteCreateDTO.getData());
         return  ResponseEntity.ok(response);
     }
-    @DeleteMapping("/aports{id}")
+    @DeleteMapping("/aportes{id}")
     public void deletarAporte(@PathVariable long id, @AuthenticationPrincipal UserJWT userAutheticated){
-        service.deletarAporte(id, userAutheticated.getUser().getId());
+        service.deletarAporte(id, userAutheticated.getUser().getUserId());
     }
 
 

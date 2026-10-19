@@ -31,18 +31,18 @@ public class RegistroController {
 
 
 
-        return service.listarRegistros(userAutheticated.getUser().getId());
+        return service.listarRegistros(userAutheticated.getUser().getUserId() );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RegistroResponse> buscaPorId(@PathVariable  long id, @AuthenticationPrincipal UserJWT userAutheticated){
-        RegistroResponse response = service.buscarPorId(id, userAutheticated.getUser().getId());
+        RegistroResponse response = service.buscarPorId(id, userAutheticated.getUser().getUserId() );
         return ResponseEntity.ok(response);
     }
     @PostMapping
     //@ResponseStatus(HttpStatus.CREATED) tbm retona 201 CREATED
     public ResponseEntity<RegistroResponse> criar(@RequestBody @Valid RegistroCreateDTO registroCreate, @AuthenticationPrincipal UserJWT userAutheticated ){
-        RegistroResponse response = service.adicionarRegistro(userAutheticated.getUser().getId(), registroCreate.getNome(),
+        RegistroResponse response = service.adicionarRegistro(userAutheticated.getUser().getUserId() , registroCreate.getNome(),
                 registroCreate.getValor(), registroCreate.getDescricao(), registroCreate.getData(),
                 registroCreate.getTipoRegistro());
 
@@ -50,7 +50,7 @@ public class RegistroController {
     }
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id, @AuthenticationPrincipal UserJWT userAutheticated){
-        service.deletarRegistro(id, userAutheticated.getUser().getId());
+        service.deletarRegistro(id, userAutheticated.getUser().getUserId() );
     }
 
     @PutMapping("/{id}")
@@ -58,7 +58,7 @@ public class RegistroController {
                                                    @RequestBody @Valid RegistroCreateDTO registroCreateDTO,
                                                    @AuthenticationPrincipal UserJWT userAutheticated
     ){
-        RegistroResponse response =  service.editar(id, userAutheticated.getUser().getId(), registroCreateDTO.getNome(),
+        RegistroResponse response =  service.editar(id, userAutheticated.getUser().getUserId() , registroCreateDTO.getNome(),
                 registroCreateDTO.getValor(), registroCreateDTO.getDescricao(), registroCreateDTO.getData(),
                 registroCreateDTO.getTipoRegistro());
         return  ResponseEntity.ok(response);

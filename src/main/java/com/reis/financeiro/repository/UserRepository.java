@@ -1,6 +1,7 @@
 package com.reis.financeiro.repository;
 
 
+import com.reis.financeiro.entities.Cofre;
 import com.reis.financeiro.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

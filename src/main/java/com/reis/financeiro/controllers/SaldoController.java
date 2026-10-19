@@ -28,7 +28,7 @@ public class SaldoController {
     }
     @GetMapping
     public ResponseEntity<SaldoResponse> consultarSaldo(@AuthenticationPrincipal UserJWT userAutheticated){
-        Saldo saldo = service.buscaOuCriaSaldo(userAutheticated.getUser().getId());
+        Saldo saldo = service.buscaOuCriaSaldo(userAutheticated.getUser().getUserId() );
         SaldoResponse saldoResponse = new SaldoResponse(saldo);
 
         return ResponseEntity.ok(saldoResponse);
