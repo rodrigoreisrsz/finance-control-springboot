@@ -1,0 +1,32 @@
+$kind: http-request
+description: ""
+url: http://localhost:8080/cofre
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \r
+
+    \  \r
+
+    \  \"nome\": \"Comprar notebook\",\r
+
+    \  \"meta\": 4500.00\r
+
+    \r
+
+    \r
+
+    \    \r
+
+    }\r
+
+    \  \r\n"
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 5000

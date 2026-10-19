@@ -1,3 +1,4 @@
+
 package com.reis.financeiro.config;
 
 import com.reis.financeiro.service.TokenService;
@@ -20,48 +21,71 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final UserDetailsService userDetailsService;
 
-    public SecurityFilter(TokenService tokenService, UserDetailsService userDetailsService) {
+    public SecurityFilter(
+            TokenService tokenService,
+            UserDetailsService userDetailsService
+    ) {
         this.tokenService = tokenService;
         this.userDetailsService = userDetailsService;
     }
 
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(">>> SECURITY FILTER EXECUTADO <<<");
-        System.out.println("Método: " + request.getMethod());
-        System.out.println("URI: " + request.getRequestURI());
-        String authorizationHeader = request.getHeader("Authorization");
-        if(authorizationHeader == null){
-            System.out.println("Cabeçalho de Autorização nulo.");
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
 
-        }
-        else if(authorizationHeader.toLowerCase().startsWith("bearer ")){
-            String token = authorizationHeader.substring(7).trim();
-            System.out.println("Token encontrado.");
-            String subject = tokenService.getSubject(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(subject);
-            UsernamePasswordAuthenticationToken authentication =new UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.getAuthorities()
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println(
-                    "Autenticação criada: " +
-                            SecurityContextHolder.getContext()
-                                    .getAuthentication().isAuthenticated()
-            );
-            System.out.println(
-                    "Autenticado: " +
-                            SecurityContextHolder.getContext()
-                                    .getAuthentication().isAuthenticated()
-            );
-        }else{
-            System.out.println("Cabeçalho authorization ausente ou inválido.");
+        String authorizationHeader =
+                request.getHeader("Authorization");
 
+        if (authorizationHeader != null
+                && authorizationHeader.regionMatches(
+                true, 0, "Bearer ", 0, 7)) {
+
+            String token = authorizationHeader
+                    .substring(7)
+                    .trim();
+
+            if (token.isEmpty()) {
+                responderNaoAutorizado(response);
+                return;
+            }
+
+            try {
+                String subject = tokenService.getSubject(token);
+
+                UserDetails userDetails =
+                        userDetailsService.loadUserByUsername(subject);
+
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
+                        );
+
+                SecurityContextHolder.getContext()
+                        .setAuthentication(authentication);
+
+            } catch (RuntimeException e) {
+                SecurityContextHolder.clearContext();
+                responderNaoAutorizado(response);
+                return;
+            }
         }
+
         filterChain.doFilter(request, response);
     }
 
+    private void responderNaoAutorizado(
+            HttpServletResponse response
+    ) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(
+                "{\"erro\":\"Token inválido ou expirado.\"}"
+        );
+    }
 }

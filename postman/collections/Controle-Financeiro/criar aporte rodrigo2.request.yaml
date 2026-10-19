@@ -1,0 +1,30 @@
+$kind: http-request
+description: ""
+url: http://localhost:8080/cofre/aportes
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \r
+
+    \  \"cofreId\": 1,\r
+
+    \  \"valor\": 250.00,\r
+
+    \  \"data\": \"2026-10-19\"\r
+
+    \r
+
+    \    \r
+
+    }\r
+
+    \  \r\n"
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 4000

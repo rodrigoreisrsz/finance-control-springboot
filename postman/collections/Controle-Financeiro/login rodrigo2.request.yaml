@@ -18,7 +18,16 @@ body:
 
     \  \r\n"
 auth:
-  type: bearer
-  credentials:
-    token: ""
+  type: noauth
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      const body = pm.response.json();
+      if (body.jwt) {
+          pm.environment.set('token', body.jwt);
+          console.log('JWT token saved to environment variable {{token}}');
+      } else {
+          console.warn('Login response did not contain a jwt field:', body);
+      }
 order: 3000

@@ -1,9 +1,9 @@
+
 package com.reis.financeiro.service;
 
 import com.reis.financeiro.entities.User;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,23 @@ import java.util.Date;
 
 @Service
 public class TokenService {
+
     @Value("${api.security.token.secret}")
     private String secret;
+
     @Value("${api.security.token.expiration}")
     private Long expiration;
-    private SecretKey getSignInKey(){
-        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+
+    private SecretKey getSignInKey() {
+        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
+
+        if (keyBytes.length < 32) {
+            throw new IllegalStateException(
+                    "A chave JWT HS256 deve ter pelo menos 32 bytes."
+            );
+        }
+
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateToken(User user) {
@@ -27,24 +38,34 @@ public class TokenService {
                 .setIssuer("Finanças")
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .setExpiration(
+                        new Date(System.currentTimeMillis() + expiration)
+                )
+                .signWith(getSignInKey())
                 .compact();
     }
-    public String getSubject(String tokenJWT){
 
-        try{
+    public String getSubject(String tokenJWT) {
+        try {
             String subject = Jwts.parser()
                     .verifyWith(getSignInKey())
                     .build()
                     .parseSignedClaims(tokenJWT)
-                    .getPayload().getSubject();
+                    .getPayload()
+                    .getSubject();
+
+            if (subject == null || subject.isBlank()) {
+                throw new IllegalArgumentException(
+                        "O token não possui um assunto válido."
+                );
+            }
+
             return subject;
 
-
-        }catch (JwtException e) {
-            throw new RuntimeException("Token JWT inválido ou expirado", e);
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new IllegalArgumentException(
+                    "Token JWT inválido ou expirado.", e
+            );
         }
-
     }
 }
