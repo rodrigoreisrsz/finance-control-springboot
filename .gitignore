@@ -38,4 +38,5 @@ build/
 .jar
 .env
 .env.*
+**/application.properties
 !.env.example
