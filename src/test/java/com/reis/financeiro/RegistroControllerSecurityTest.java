@@ -36,9 +36,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = RegistroController.class)
@@ -81,7 +82,30 @@ class RegistroControllerSecurityTest {
     @Test
     void deveBloquearListagemSemToken() throws Exception {
         mockMvc.perform(get("/registros"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized())
+                .andExpect(result ->
+                        assertNull(result.getRequest().getSession(false))
+                );
+
+        verifyNoInteractions(registroService);
+    }
+
+    @Test
+    void deveBloquearListagemComTokenInvalido() throws Exception {
+        when(tokenService.getSubject("token-invalido"))
+                .thenThrow(new IllegalArgumentException("Token inválido."));
+
+        mockMvc.perform(
+                        get("/registros")
+                                .header(
+                                        HttpHeaders.AUTHORIZATION,
+                                        "Bearer token-invalido"
+                                )
+                )
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.erro").value(
+                        "Token inválido ou expirado."
+                ));
 
         verifyNoInteractions(registroService);
     }
@@ -134,5 +158,58 @@ class RegistroControllerSecurityTest {
                 .andExpect(jsonPath("$.nome").value("Conta de luz"));
 
         verify(registroService).buscarPorId(7L, 42L);
+    }
+
+    @Test
+    void deveUsarUsuarioDoTokenMesmoQuandoRequisicaoInformaOutroId()
+            throws Exception {
+
+        Registro registro = new Registro(
+                usuario,
+                "Conta de luz",
+                new BigDecimal("150.00"),
+                "Conta mensal",
+                LocalDate.of(2026, 10, 1),
+                TipoRegistro.GASTO
+        );
+        registro.setId(7L);
+
+        when(registroService.adicionarRegistro(
+                42L,
+                "Conta de luz",
+                new BigDecimal("150.00"),
+                "Conta mensal",
+                LocalDate.of(2026, 10, 1),
+                TipoRegistro.GASTO
+        )).thenReturn(new RegistroResponse(registro));
+
+        mockMvc.perform(
+                        post("/registros")
+                                .header(
+                                        HttpHeaders.AUTHORIZATION,
+                                        "Bearer token-valido"
+                                )
+                                .contentType("application/json")
+                                .content("""
+                                        {
+                                          "userId": 7,
+                                          "nome": "Conta de luz",
+                                          "valor": 150.00,
+                                          "descricao": "Conta mensal",
+                                          "data": "2026-10-01",
+                                          "tipoRegistro": "GASTO"
+                                        }
+                                        """)
+                )
+                .andExpect(status().isCreated());
+
+        verify(registroService).adicionarRegistro(
+                42L,
+                "Conta de luz",
+                new BigDecimal("150.00"),
+                "Conta mensal",
+                LocalDate.of(2026, 10, 1),
+                TipoRegistro.GASTO
+        );
     }
 }

@@ -85,6 +85,11 @@
 			<artifactId>spring-boot-starter-security-oauth2-authorization-server-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 
 </dependencies>
@@ -131,8 +136,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<source>24</source>
-					<target>24</target>
+					<source>21</source>
+					<target>21</target>
 
 				</configuration>
 			</plugin>
