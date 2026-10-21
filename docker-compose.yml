@@ -3,9 +3,9 @@ services:
     image: postgres:15
     container_name: postgres_db_controlefinanceiroNovo
     environment:
-      POSTGRES_USER: app_service
-      POSTGRES_PASSWORD: rdrayanezapzapzap22233337777
-      POSTGRES_DB: FinanceiroNovo
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5433:5432"
     volumes:
@@ -13,7 +13,7 @@ services:
     networks:
       - financeiro_net
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U app_service -d FinanceiroNovo" ]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -27,14 +27,17 @@ services:
     depends_on:
       bancofinanceiro:
         condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bancofinanceiro:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "8080:8080"
     networks:
       - financeiro_net
-    tty: true
 
 volumes:
-  postgres_data_final: # Mudamos o nome do volume para forçar o docker a criar um novo sem cache
+  postgres_data_final:
 
 networks:
   financeiro_net:
