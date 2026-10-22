@@ -47,3 +47,114 @@
     grid-template-columns: 1fr;
   }
 }
+
+.dashboard-lower-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 24px;
+  margin-top: 28px;
+  align-items: start;
+}
+
+.goals-section {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.goals-section h2 {
+  margin: 0;
+  color: #202437;
+  font-size: 20px;
+}
+
+.goals-section .goal-card {
+  min-width: 0;
+}
+
+.dashboard-lower-grid .transactions-card {
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .dashboard-lower-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-layout {
+  --page-background: #f5f6fa;
+  --card-background: #ffffff;
+  --text-color: #202437;
+  --muted-text: #64748b;
+  --border-color: #e8eaf0;
+
+  background-color: var(--page-background);
+  color: var(--text-color);
+}
+
+.dashboard-layout.dark {
+  --page-background: #11131c;
+  --card-background: #1b1e2b;
+  --text-color: #f1f5f9;
+  --muted-text: #a0aec0;
+  --border-color: #343849;
+}
+
+.dashboard-content {
+  background-color: var(--page-background);
+  color: var(--text-color);
+}
+
+.dark .summary-card,
+.dark .monthly-chart,
+.dark .goal-card,
+.dark .transactions-card {
+  background-color: var(--card-background);
+  border-color: var(--border-color);
+}
+
+.dark .summary-card h3,
+.dark .summary-card span,
+.dark .chart-subtitle,
+.dark .chart-legend,
+.dark .month-label,
+.dark .goal-card-header span,
+.dark .goal-values span,
+.dark .transactions-table th {
+  color: var(--muted-text);
+}
+
+.dark .summary-value,
+.dark .monthly-chart h2,
+.dark .goals-section h2,
+.dark .goal-card-header h3,
+.dark .goal-values strong,
+.dark .transactions-card h2 {
+  color: var(--text-color);
+}
+
+.dark .transactions-table td {
+  color: var(--text-color);
+}
+
+.dark .transactions-table th,
+.dark .transactions-table td {
+  border-color: var(--border-color);
+}
+
+.dark .goal-progress-track {
+  background-color: #343849;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+
+
+
