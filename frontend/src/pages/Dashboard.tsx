@@ -1,5 +1,6 @@
 import Sidebar from "../components/Sidebar"
 import SummaryCard from "../components/SummaryCard"
+import MonthlyChart from "../components/MonthlyChart"
 import './Dashboard.css'
 
 function Dashboard(){
@@ -40,6 +41,7 @@ function Dashboard(){
                     description="Total guardado"
                 />
             </section>
+            <MonthlyChart />
         </main>
        </div>
     )

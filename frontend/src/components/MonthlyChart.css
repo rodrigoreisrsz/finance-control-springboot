@@ -1,0 +1,95 @@
+
+.monthly-chart {
+  margin-top: 28px;
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e8eaf0;
+  border-radius: 12px;
+}
+
+.monthly-chart h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: #202437;
+}
+
+.chart-subtitle {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 20px;
+  margin-top: 24px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.legend-income {
+  background-color: #16a34a;
+}
+
+.legend-expense {
+  background-color: #f87171;
+}
+
+.chart-bars {
+  display: flex;
+  justify-content: space-around;
+  gap: 12px;
+  height: 220px;
+  margin-top: 24px;
+  border-bottom: 1px solid #e8eaf0;
+}
+
+.chart-month {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-columns {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.chart-bar {
+  width: min(32px, 40%);
+  min-height: 3px;
+  border-radius: 5px 5px 0 0;
+  transition: height 0.3s ease;
+}
+
+.chart-income {
+  background-color: #16a34a;
+}
+
+.chart-expense {
+  background-color: #f87171;
+}
+
+.month-label {
+  padding: 10px 0;
+  color: #64748b;
+  font-size: 12px;
+}
