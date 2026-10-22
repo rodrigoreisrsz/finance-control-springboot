@@ -1,0 +1,36 @@
+.sidebar{
+    width: 240px;
+    min-height: 100vh;
+    padding: 24px 16px;
+    background-color:  #171923;
+    color: #ffffff;
+    box-sizing: border-box;
+}
+.sidebar h2{
+    margin: 0 0 32px;
+    font-size: 20px;
+    
+}
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar nav li {
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  color: #cbd5e0;
+  cursor: pointer;
+}
+
+.sidebar nav li:first-child {
+  background-color: #343b50;
+  color: #ffffff;
+}
+
+.sidebar nav li:hover {
+  background-color: #292f40;
+  color: #ffffff;
+}

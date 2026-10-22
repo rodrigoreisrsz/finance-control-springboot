@@ -1,24 +1,7 @@
+import Dashboard from './pages/Dashboard';
 
-import './App.css'
+function App(){
+  return <Dashboard />
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      [elementName: string]: unknown
-    }
-  }
 }
-
-function App() {
-
-  return (
-    <main>
-      <h1>Controle Financeiro Pessoal</h1>
-      <p>Frontend iniciado com sucesso!</p>
-    </main>
-  )
-}
-
-export default App
-
-  
+export default App;
