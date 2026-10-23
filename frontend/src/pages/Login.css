@@ -1,0 +1,152 @@
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: Inter, Arial, sans-serif;
+  background: #f8fafc;
+  color: #172033;
+}
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 56px;
+  background: #111c2e;
+  color: #ffffff;
+}
+
+.login-brand h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.login-brand-content {
+  max-width: 440px;
+  margin: auto 0;
+}
+
+.login-brand-content h2 {
+  margin-bottom: 20px;
+  font-size: clamp(32px, 3.5vw, 48px);
+  line-height: 1.15;
+}
+
+.login-brand-content p {
+  color: #cbd5e1;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.login-form-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-form-container h2 {
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.login-form-container > p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.login-form-container form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+.login-form-container label {
+  margin: 18px 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.login-form-container input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #172033;
+  font: inherit;
+  outline: none;
+}
+
+.login-form-container input:focus {
+  border-color: #16a36a;
+  box-shadow: 0 0 0 3px rgb(22 163 106 / 12%);
+}
+
+.forgot-password {
+  align-self: flex-end;
+  margin-top: 14px;
+  color: #168653;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.login-form-container button {
+  margin-top: 28px;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #16a36a;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.login-form-container button:hover {
+  background: #128454;
+}
+
+.register-link {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #168653;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    grid-template-columns: 1fr;
+  }
+
+  .login-brand {
+    min-height: 220px;
+    padding: 32px 24px;
+  }
+
+  .login-brand-content {
+    margin: 48px 0 16px;
+  }
+
+  .login-brand-content h2 {
+    font-size: 32px;
+  }
+
+  .login-form-section {
+    padding: 48px 24px;
+  }
+}

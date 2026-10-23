@@ -6,9 +6,11 @@ import RecentTransactions from "../components/RecentTransactions"
 import './Dashboard.css'
 import {useState} from 'react'
 import ThemeToggle from "../components/ThemeToggle"
+import Topbar from "../components/Topbar"
 
 function Dashboard(){
     const [isDark, setIsDark] = useState(false)
+    const [search, setSearch] = useState('')
 
    
 
@@ -17,6 +19,7 @@ function Dashboard(){
         <Sidebar />
 
         <main className="dashboard-content">
+            <Topbar onSearch={setSearch} />
             <header className="dashboard-header">
                 <div>
                     <h1>Visão geral</h1>
@@ -72,7 +75,7 @@ function Dashboard(){
                     />
             </section>
 
-            <RecentTransactions />
+            <RecentTransactions search={search} />
         </section>
 
         </main>
