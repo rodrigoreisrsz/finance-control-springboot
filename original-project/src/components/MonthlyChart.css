@@ -1,0 +1,113 @@
+
+.monthly-chart {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 18px 16px;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(20, 40, 60, 0.025);
+}
+
+.monthly-chart h2 {
+  margin: 0 0 5px;
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.chart-subtitles {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: 11px;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin: 0 0 6px;
+  font-size: 10px;
+  color: var(--muted-text);
+}
+
+.chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-legend i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.legend-income {
+  background: #16a34a;
+}
+
+.legend-expense {
+  background: #cbd5e1;
+}
+
+.chart-bars {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  height: 190px;
+  margin-top: 10px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 45px,
+    var(--border-color) 46px,
+    var(--border-color) 47px
+  );
+}
+
+.chart-month {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-columns {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.chart-bar {
+  width: min(22px, 40%);
+  min-height: 0;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.3s ease;
+}
+
+.chart-income {
+  background: #16a34a;
+}
+
+.chart-expense {
+  background: #d8e0e8;
+}
+
+.month-label {
+  padding: 9px 0;
+  color: var(--muted-text);
+  font-size: 10px;
+  text-transform: capitalize;
+}
