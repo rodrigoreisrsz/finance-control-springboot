@@ -1,6 +1,10 @@
 
 import './RecentTransactions.css'
 
+type RecentTransactionsProps = {
+  search: string
+}
+
 const transactions = [
   {
     id: 1,
@@ -28,12 +32,22 @@ const transactions = [
   },
 ]
 
-function RecentTransactions() {
+function RecentTransactions({ search }: RecentTransactionsProps) {
   const formatCurrency = (value: number) =>
     value.toLocaleString('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     })
+
+  const term = search.trim().toLowerCase()
+
+  const filteredTransactions = transactions.filter((transaction) => {
+    return (
+      transaction.description.toLowerCase().includes(term) ||
+      transaction.category.toLowerCase().includes(term) ||
+      transaction.type.toLowerCase().includes(term)
+    )
+  })
 
   return (
     <section className="transactions-card">
@@ -51,7 +65,7 @@ function RecentTransactions() {
           </thead>
 
           <tbody>
-            {transactions.map((transaction) => (
+            {filteredTransactions.map((transaction) => (
               <tr key={transaction.id}>
                 <td>{transaction.description}</td>
                 <td>{transaction.category}</td>
@@ -68,6 +82,12 @@ function RecentTransactions() {
                 </td>
               </tr>
             ))}
+
+            {filteredTransactions.length === 0 && (
+              <tr>
+                <td colSpan={4}>Nenhuma transação encontrada.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

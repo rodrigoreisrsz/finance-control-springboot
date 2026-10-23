@@ -1,71 +1,98 @@
 
 .dashboard-layout {
+  --page-background: #0b1218;
+  --sidebar-background: #080f15;
+  --card-background: #131f29;
+  --border-color: #22313d;
+  --text-color: #f1f5f9;
+  --muted-text: #91a0ae;
+  --green: #19c768;
+
   display: flex;
   min-height: 100vh;
-  background-color: #f5f6fa;
+  background: var(--page-background);
+  color: var(--text-color);
 }
 
 .dashboard-content {
   flex: 1;
   min-width: 0;
-  padding: 40px;
-  color: #202437;
+  padding: 24px 28px;
+  background: var(--page-background);
+  color: var(--text-color);
 }
 
+/* Cabeçalho */
+
 .dashboard-header {
-  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 4px 0 22px;
 }
 
 .dashboard-header h1 {
-  margin: 0 0 8px;
+  margin: 0 0 5px;
   font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .dashboard-header p {
   margin: 0;
-  color: #64748b;
+  color: var(--muted-text);
+  font-size: 14px;
 }
+
+.dashboard-header > p {
+  order: 2;
+}
+
+/* Cards de resumo */
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-@media (min-width: 1200px) {
-  .summary-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+.summary-card,
+.monthly-chart,
+.goal-card,
+.transactions-card {
+  min-width: 0;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
 }
 
-@media (max-width: 600px) {
-  .dashboard-content {
-    padding: 20px;
-  }
+/* Gráfico e cofres */
 
-  .summary-grid {
-    grid-template-columns: 1fr;
-  }
+.monthly-chart {
+  margin-bottom: 12px;
 }
 
 .dashboard-lower-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 24px;
-  margin-top: 28px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 12px;
+  margin-top: 12px;
   align-items: start;
 }
 
 .goals-section {
   display: grid;
-  gap: 16px;
+  gap: 12px;
   min-width: 0;
 }
 
 .goals-section h2 {
   margin: 0;
-  color: #202437;
-  font-size: 20px;
+  color: var(--text-color);
+  font-size: 18px;
 }
 
 .goals-section .goal-card {
@@ -76,85 +103,71 @@
   margin-top: 0;
 }
 
-@media (max-width: 900px) {
+/* Cores do tema escuro */
+
+.dashboard-layout .summary-card h3,
+.dashboard-layout .summary-card span,
+.dashboard-layout .chart-subtitle,
+.dashboard-layout .chart-legend,
+.dashboard-layout .month-label,
+.dashboard-layout .goal-card-header span,
+.dashboard-layout .goal-values span,
+.dashboard-layout .transactions-table th {
+  color: var(--muted-text);
+}
+
+.dashboard-layout .summary-value,
+.dashboard-layout .monthly-chart h2,
+.dashboard-layout .goal-card-header h3,
+.dashboard-layout .goal-values strong,
+.dashboard-layout .transactions-card h2 {
+  color: var(--text-color);
+}
+
+.dashboard-layout .transactions-table td {
+  color: var(--text-color);
+}
+
+.dashboard-layout .transactions-table th,
+.dashboard-layout .transactions-table td {
+  border-color: var(--border-color);
+}
+
+.dashboard-layout .goal-progress-track {
+  background: #293844;
+}
+
+/* Tema claro */
+
+.dashboard-layout:not(.dark) {
+  --page-background: #f5f6fa;
+  --sidebar-background: #ffffff;
+  --card-background: #ffffff;
+  --border-color: #e8eaf0;
+  --text-color: #202437;
+  --muted-text: #64748b;
+}
+
+@media (max-width: 1100px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .dashboard-lower-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.dashboard-layout {
-  --page-background: #f5f6fa;
-  --card-background: #ffffff;
-  --text-color: #202437;
-  --muted-text: #64748b;
-  --border-color: #e8eaf0;
+@media (max-width: 600px) {
+  .dashboard-content {
+    padding: 20px 14px;
+  }
 
-  background-color: var(--page-background);
-  color: var(--text-color);
+  .dashboard-header h1 {
+    font-size: 23px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
 }
-
-.dashboard-layout.dark {
-  --page-background: #11131c;
-  --card-background: #1b1e2b;
-  --text-color: #f1f5f9;
-  --muted-text: #a0aec0;
-  --border-color: #343849;
-}
-
-.dashboard-content {
-  background-color: var(--page-background);
-  color: var(--text-color);
-}
-
-.dark .summary-card,
-.dark .monthly-chart,
-.dark .goal-card,
-.dark .transactions-card {
-  background-color: var(--card-background);
-  border-color: var(--border-color);
-}
-
-.dark .summary-card h3,
-.dark .summary-card span,
-.dark .chart-subtitle,
-.dark .chart-legend,
-.dark .month-label,
-.dark .goal-card-header span,
-.dark .goal-values span,
-.dark .transactions-table th {
-  color: var(--muted-text);
-}
-
-.dark .summary-value,
-.dark .monthly-chart h2,
-.dark .goals-section h2,
-.dark .goal-card-header h3,
-.dark .goal-values strong,
-.dark .transactions-card h2 {
-  color: var(--text-color);
-}
-
-.dark .transactions-table td {
-  color: var(--text-color);
-}
-
-.dark .transactions-table th,
-.dark .transactions-table td {
-  border-color: var(--border-color);
-}
-
-.dark .goal-progress-track {
-  background-color: #343849;
-}
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-
-
-

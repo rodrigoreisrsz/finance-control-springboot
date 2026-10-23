@@ -1,27 +1,118 @@
 
 .summary-card {
-  background-color: #ffffff;
-  padding: 24px;
-  border: 1px solid #e8eaf0;
+  min-width: 0;
+  padding: 20px;
+  background: var(--card-background, #131f29);
+  border: 1px solid var(--border-color, #22313d);
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 4%);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 8%);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  border-color: #365044;
+}
+
+.summary-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 .summary-card h3 {
-  margin: 0 0 16px;
-  color: #64748b;
-  font-size: 14px;
+  margin: 0;
+  color: var(--muted-text, #91a0ae);
+  font-size: 13px;
   font-weight: 500;
 }
 
-.summary-value {
-  margin: 0 0 8px;
-  color: #202437;
-  font-size: 24px;
-  font-weight: 700;
+.summary-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 21px;
+  font-weight: 600;
 }
 
-.summary-card span {
-  color: #94a3b8;
-  font-size: 12px;
+.summary-card-icon.green {
+  color: #20d477;
+  background: rgb(32 212 119 / 12%);
+}
+
+.summary-card-icon.red {
+  color: #fb7185;
+  background: rgb(251 113 133 / 12%);
+}
+
+.summary-card-icon.blue {
+  color: #60a5fa;
+  background: rgb(96 165 250 / 12%);
+}
+
+.summary-card-icon.purple {
+  color: #c084fc;
+  background: rgb(192 132 252 / 12%);
+}
+
+.summary-value {
+  margin: 0 0 12px;
+  color: var(--text-color, #f1f5f9);
+  font-size: clamp(20px, 2vw, 27px);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  overflow-wrap: anywhere;
+}
+
+.summary-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.summary-card-bottom > span {
+  color: var(--muted-text, #91a0ae);
+  font-size: 11px;
+}
+
+.summary-card-bottom .summary-trend {
+  font-weight: 600;
+}
+
+.summary-card-bottom .summary-trend.green {
+  color: #20d477;
+}
+
+.summary-card-bottom .summary-trend.red {
+  color: #fb7185;
+}
+
+.summary-card-bottom .summary-trend.blue {
+  color: #60a5fa;
+}
+
+.summary-card-bottom .summary-trend.purple {
+  color: #c084fc;
+}
+
+.dashboard-layout:not(.dark) .summary-card {
+  box-shadow: 0 2px 6px rgb(0 0 0 / 4%);
+}
+
+@media (max-width: 600px) {
+  .summary-card {
+    padding: 16px;
+  }
+
+  .summary-card-value {
+    font-size: 22px;
+  }
 }

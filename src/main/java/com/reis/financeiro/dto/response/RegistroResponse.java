@@ -13,6 +13,7 @@ public class RegistroResponse {
     private BigDecimal valor;
     private LocalDate data;
     private String descricao;
+    private String tipoRegistro;
 
     public RegistroResponse(Registro registroSalvo) {
         this.id = registroSalvo.getId();
@@ -20,6 +21,7 @@ public class RegistroResponse {
         this.valor = registroSalvo.getValor();
         this.data = registroSalvo.getData();
         this.descricao = registroSalvo.getDescricao();
+        this.tipoRegistro = registroSalvo.getTipoRegistro().name();
     }
 
 
