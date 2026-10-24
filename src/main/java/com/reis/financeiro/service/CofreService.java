@@ -81,6 +81,9 @@ public class CofreService {
 
         return new CofreResponse(cofreSalvo, BigDecimal.ZERO);
     }
+    public List<Aporte> listarAportes(long userId) {
+        return aporteRepository.findByCofreUserId(userId);
+    }
 
     // Editar somente um cofre pertencente ao usuário
     @Transactional

@@ -1,1 +1,32 @@
-:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172536;background:#f7f9fc;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-optical-sizing:auto;font-weight:400}*{box-sizing:border-box}html,body,#root{min-width:320px;min-height:100%;margin:0}body{min-height:100vh}button,input,select,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transparent}a{color:inherit}
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172536;background:#f7f9fc;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-optical-sizing:auto;font-weight:400;--page-background:#f7f9fc;--panel-background:#fff;--panel-alt:#f8fafc;--panel-strong:#111827;--sidebar-background:#14232d;--border-color:#e5eaf0;--text-color:#172536;--muted-text:#718096;--primary:#16a34a;--primary-strong:#15803d;--danger:#ef4444;--shadow:0 12px 30px rgba(15,23,42,.08)}*{box-sizing:border-box}html,body,#root{min-width:320px;min-height:100%;margin:0}body{min-height:100vh}button,input,select,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transparent}a{color:inherit}
+
+html.dark-theme{--page-background:#0b1218;--panel-background:#111c26;--panel-alt:#131f29;--panel-strong:#f8fafc;--sidebar-background:#080f15;--border-color:#22313d;--text-color:#f1f5f9;--muted-text:#9fb0c2;--primary:#19c768;--primary-strong:#4ade80;--danger:#f87171;--shadow:0 18px 40px rgba(2,6,23,.55);color:#f1f5f9;background:#0b1218;color-scheme:dark}
+html.dark-theme,html.dark-theme body,html.dark-theme #root{background:var(--page-background);color:var(--text-color)}
+
+html.dark-theme .login-page{background:#0b1218;color:#f1f5f9}
+html.dark-theme .login-brand{background:radial-gradient(ellipse at 75% 62%,rgba(22,163,106,.18),transparent 42%),#0b1520}
+html.dark-theme .login-form-section{background:linear-gradient(135deg,#0b1218,#111c26);color:#f1f5f9}
+html.dark-theme .login-form-container>p,html.dark-theme .login-form-container label,html.dark-theme .register-link,html.dark-theme .login-form-container .forgot-password,html.dark-theme .login-form-container .auth-success,html.dark-theme .register-link a,html.dark-theme .register-link a:visited{color:#c0ccd8}
+html.dark-theme .login-form-container input,html.dark-theme .register-form-container input,html.dark-theme .register-form-container select,html.dark-theme .register-form-container textarea,html.dark-theme .new-registro-form input,html.dark-theme .new-registro-form textarea,html.dark-theme .registro-money-input{color:#f1f5f9;background:#131f29;border-color:#334454}
+html.dark-theme .login-form-container button,html.dark-theme .registro-submit-button,html.dark-theme .secondary-action{color:#f8fafc}
+html.dark-theme .register-page,html.dark-theme .register-form-section{background:#0b1218;color:#f1f5f9}
+html.dark-theme .new-registro-form-card,html.dark-theme .registro-preview-card,html.dark-theme .dashboard-layout .monthly-chart,html.dark-theme .dashboard-layout .goals-panel,html.dark-theme .dashboard-layout .transactions-card,html.dark-theme .dashboard-layout .distribution-card,html.dark-theme .dashboard-layout .motivation-banner,html.dark-theme .dashboard-layout .summary-card{background:var(--panel-alt);border-color:var(--border-color);box-shadow:none}
+html.dark-theme .dashboard-layout{--page-background:#0b1218;--sidebar-background:#080f15;--card-background:#131f29;--border-color:#22313d;--text-color:#f1f5f9;--muted-text:#91a0ae;--green:#19c768;color-scheme:dark}
+html.dark-theme .dashboard-layout .habit-card{background:linear-gradient(150deg,#103a2b,#164a35);color:#e8fff2}
+html.dark-theme .dashboard-layout .habit-card p{color:#a9d5bd}
+html.dark-theme .dashboard-layout .donut-hole{background:var(--card-background)}
+html.dark-theme .dashboard-layout .transactions-table th,html.dark-theme .dashboard-layout .transactions-table td,html.dark-theme .dashboard-layout .goal-card{border-color:var(--border-color)}
+html.dark-theme .dashboard-layout .transactions-table td{color:var(--text-color)}
+html.dark-theme .dashboard-layout .transaction-count{color:#cbd5e1}
+html.dark-theme .dashboard-layout .dashboard-alert{border-color:#7f1d1d;color:#fecaca;background:#450a0a}
+html.dark-theme .dashboard-layout .type-pill.income{background:rgba(22,163,74,.14);color:#8ff0ba}
+html.dark-theme .dashboard-layout .type-pill.expense{background:rgba(239,68,68,.14);color:#fca5a5}
+html.dark-theme .new-registro-top-icon,html.dark-theme .new-registro-step>span {background:#0f3b2a;color:#b7f7ca;border-color:#204d3f}
+html.dark-theme .income-option.selected{background:rgba(22,163,74,.12)}
+html.dark-theme .expense-option.selected{background:rgba(239,68,68,.12)}
+html.dark-theme .registro-cancel-button{background:var(--panel-alt);color:#dbeafe}
+html.dark-theme .success-feedback{background:rgba(22,163,74,.12);border-color:#204d3f;color:#d1fae5}
+html.dark-theme .error-feedback{background:rgba(239,68,68,.12);border-color:#7f1d1d;color:#fecaca}
+html.dark-theme .preview-icon{background:#123b2a;color:#b7f7ca}
+html.dark-theme .preview-expense .preview-icon{background:#3f1d1d;color:#fecaca}
+html.dark-theme input,html.dark-theme select,html.dark-theme textarea{color-scheme:dark}

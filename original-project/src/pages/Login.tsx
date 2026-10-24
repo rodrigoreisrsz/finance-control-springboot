@@ -64,26 +64,7 @@ function Login() {
                     <div><span>Despesas</span><b>R$ 2.150</b><i className="mock-bar blue" /></div>
                   </div>
                   <div className="mock-lower">
-                  <div className="mock-chart">
-                  <strong>Fluxo mensal</strong>
-
-                  <div className="mock-chart-lines">
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-
-                  <div className="mock-chart-bars">
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-                </div>
+                    <div className="mock-chart"><strong>Fluxo mensal</strong><div className="mock-chart-lines"><i/><i/><i/><i/></div><div className="mock-chart-bars"><i/><i/><i/><i/><i/><i/><i/></div></div>
                     <div className="mock-goals"><strong>Metas</strong><div className="goal-line"><i/><span/></div><div className="goal-line second"><i/><span/></div><div className="goal-line third"><i/><span/></div></div>
                   </div>
                 </div>
@@ -92,7 +73,7 @@ function Login() {
             </div>
             <div className="phone-float">
               <div className="phone-frame"><div className="phone-notch"/><div className="phone-ui">
-                <div className="phone-greeting">Olá, Rodrigo <span>✦</span></div><small>Saldo disponível</small><b className="phone-balance">R$ 8.450,00</b>
+                <div className="phone-greeting">Olá! <span>✦</span></div><small>Saldo disponível</small><b className="phone-balance">R$ 8.450,00</b>
                 <div className="phone-change">↗ 12,8% este mês</div>
                 <div className="phone-mini-title">Resumo do mês</div><div className="phone-mini-cards"><div><i>↙</i><small>Receitas</small><b>R$ 5.200</b></div><div><i>↗</i><small>Despesas</small><b>R$ 2.150</b></div></div>
                 <div className="phone-mini-title">Minhas metas <span>Ver todas</span></div><div className="phone-goal"><div><span>Viagem</span><b>68%</b></div><i><em/></i></div><div className="phone-goal"><div><span>Novo notebook</span><b>42%</b></div><i><em/></i></div>

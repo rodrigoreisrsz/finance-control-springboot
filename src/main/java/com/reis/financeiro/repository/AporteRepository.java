@@ -13,6 +13,14 @@ public interface AporteRepository extends JpaRepository<Aporte, Long> {
 
     @Query("""
         SELECT a FROM Aporte a
+        WHERE a.cofre.user.userId = :userId
+        """)
+    List<Aporte> findByCofreUserId(
+            @Param("userId") Long userId
+    );
+
+    @Query("""
+        SELECT a FROM Aporte a
         WHERE a.id = :id
           AND a.cofre.user.userId = :userId
         """)

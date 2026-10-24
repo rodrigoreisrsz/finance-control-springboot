@@ -66,7 +66,11 @@ public class CofreController {
         CofreResponse response =  service.criarAporte(aporteCreateDTO.getCofreId(), userAutheticated.getUser().getUserId(), aporteCreateDTO.getValor(), aporteCreateDTO.getData());
         return  ResponseEntity.ok(response);
     }
-    @DeleteMapping("/aportes{id}")
+    @GetMapping("/aportes")
+    public List<Aporte> listarAportes(@AuthenticationPrincipal UserJWT userAutheticated){
+        return service.listarAportes(userAutheticated.getUser().getUserId());
+    }
+    @DeleteMapping("/aportes/{id}")
     public void deletarAporte(@PathVariable long id, @AuthenticationPrincipal UserJWT userAutheticated){
         service.deletarAporte(id, userAutheticated.getUser().getUserId());
     }

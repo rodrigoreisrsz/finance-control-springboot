@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import SummaryCard from '../components/SummaryCard'
 import MonthlyChart from '../components/MonthlyChart'
@@ -7,6 +7,7 @@ import GoalCard from '../components/GoalCard'
 import RecentTransactions from '../components/RecentTransactions'
 import Topbar from '../components/Topbar'
 import ThemeToggle from '../components/ThemeToggle'
+import { useTheme } from '../contexts/ThemeContext'
 import { listarRegistros, type Registro } from '../services/registros'
 import { listarCofres, type Cofre } from '../services/cofres'
 import './Dashboard.css'
@@ -15,7 +16,9 @@ const moeda = (valor: number) => valor.toLocaleString('pt-BR', { style: 'currenc
 
 function Dashboard() {
   // O layout começa no tema claro; o botão permite alternar durante o uso.
-  const [isDark, setIsDark] = useState(false)
+  const location = useLocation()
+  const { isDark, toggleTheme } = useTheme()
+  const [animatedArrow, setAnimatedArrow] = useState<'income' | 'expense' | null>(null)
   const [search, setSearch] = useState('')
   const [registros, setRegistros] = useState<Registro[]>([])
   const [cofres, setCofres] = useState<Cofre[]>([])
@@ -34,6 +37,15 @@ function Dashboard() {
 
   useEffect(() => { void carregarDados() }, [carregarDados])
 
+  useEffect(() => {
+    const tipoAdicionado = (location.state as { registroAdicionado?: string } | null)?.registroAdicionado
+    if (tipoAdicionado !== 'GANHO' && tipoAdicionado !== 'GASTO') return
+
+    setAnimatedArrow(tipoAdicionado === 'GANHO' ? 'income' : 'expense')
+    const timeout = window.setTimeout(() => setAnimatedArrow(null), 950)
+    return () => window.clearTimeout(timeout)
+  }, [location.state])
+
   const resumo = useMemo(() => {
     const entradas = registros.filter((r) => r.tipoRegistro === 'GANHO').reduce((s, r) => s + Number(r.valor), 0)
     const despesas = registros.filter((r) => r.tipoRegistro === 'GASTO').reduce((s, r) => s + Number(r.valor), 0)
@@ -51,7 +63,7 @@ function Dashboard() {
       <Topbar onSearch={setSearch} />
       <header className="dashboard-header">
         <div className="dashboard-welcome"><h1>Olá!</h1><p>Aqui está um resumo da sua vida financeira.</p></div>
-        <div className="dashboard-header-actions"><ThemeToggle isDark={isDark} onToggle={() => setIsDark((atual) => !atual)} /><div className="dashboard-date"><span aria-hidden="true">▦</span> Hoje, {hoje}</div></div>
+        <div className="dashboard-header-actions"><ThemeToggle isDark={isDark} onToggle={toggleTheme} /><div className="dashboard-date"><span aria-hidden="true">▦</span> Hoje, {hoje}</div></div>
       </header>
 
       {erro && <div className="dashboard-alert" role="alert">{erro} <button onClick={() => void carregarDados()}>Tentar novamente</button></div>}
@@ -59,22 +71,22 @@ function Dashboard() {
 
       <section className="summary-grid" aria-label="Resumo financeiro">
         <SummaryCard title="Saldo atual" value={moeda(resumo.saldo)} description="Entradas menos despesas" icon="▣" tone="green" />
-        <SummaryCard title="Entradas" value={moeda(resumo.entradas)} description="Total de ganhos cadastrados" icon="↑" tone="green" />
-        <SummaryCard title="Despesas" value={moeda(resumo.despesas)} description="Total de gastos cadastrados" icon="↓" tone="red" />
+        <SummaryCard title="Entradas" value={moeda(resumo.entradas)} description="Total de ganhos cadastrados" icon="↑" tone="green" animation={animatedArrow === 'income' ? 'income' : undefined} />
+        <SummaryCard title="Despesas" value={moeda(resumo.despesas)} description="Total de gastos cadastrados" icon="↓" tone="red" animation={animatedArrow === 'expense' ? 'expense' : undefined} />
         <SummaryCard title="Cofres" value={moeda(resumo.guardado)} description={`${cofres.length} ${cofres.length === 1 ? 'meta ativa' : 'metas ativas'}`} icon="◎" tone="green" />
       </section>
 
       <section className="dashboard-main-grid">
         <MonthlyChart registros={registros} />
         <section className="goals-panel" id="cofres">
-          <div className="section-heading"><div><h2>Cofres e metas</h2><p>Acompanhe o progresso dos seus objetivos</p></div><Link to="/dashboard#cofres" className="text-link">Ver todos →</Link></div>
+          <div className="section-heading"><div><h2>Cofres e metas</h2><p>Acompanhe o progresso dos seus objetivos</p></div><Link to="/cofres" className="text-link">Ver todos →</Link></div>
           {cofres.length ? <div className="goals-list">{cofres.slice(0, 3).map((cofre) => <GoalCard key={cofre.id} name={cofre.nome} current={Number(cofre.valorAtual ?? 0)} target={Number(cofre.meta)} />)}</div> : <div className="empty-card">{carregando ? 'Carregando cofres…' : 'Você ainda não tem cofres cadastrados.'}</div>}
         </section>
         <aside className="habit-card">
           <div className="habit-illustration" aria-hidden="true">🌱</div>
           <h2>Pequenos hábitos<br />fazem grandes sonhos.</h2>
           <p>Organize suas finanças hoje e construa o futuro que você quer.</p>
-          <Link to="/dashboard#transacoes" className="primary-action">Adicionar registro</Link>
+          <Link to="/registros/novo" className="primary-action">Adicionar registro</Link>
         </aside>
       </section>
 
@@ -89,8 +101,7 @@ function Dashboard() {
         </section>
       </section>
 
-      <section className="motivation-banner"><div className="banner-plant" aria-hidden="true">🌱</div><div><h2>Seus objetivos importam!</h2><p>Continue firme. Cada pequena conquista aproxima você dos seus sonhos.</p></div><Link to="/dashboard#cofres" className="secondary-action">Ver cofres</Link><span className="banner-arrow" aria-hidden="true">›</span></section>
-    </main>
+      <section className="motivation-banner"><div className="banner-plant" aria-hidden="true">🌱</div><div><h2>Seus objetivos importam!</h2><p>Continue firme. Cada pequena conquista aproxima você dos seus sonhos.</p></div>      <Link to="/cofres" className="secondary-action">Ver cofres</Link><span className="banner-arrow" aria-hidden="true">›</span></section>    </main>
   </div>
 }
 

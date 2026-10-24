@@ -24,10 +24,6 @@ export async function apiFetch(
 
   if (response.status === 401) {
     sessionStorage.removeItem('jwt')
-
-    if (window.location.pathname !== '/login') {
-      window.location.assign('/login')
-    }
   }
 
   return response
