@@ -34,6 +34,8 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      environment:
+      CORS_ALLOWED_ORIGINS: "http://localhost:5173"
     ports:
       - "8080:8080"
     networks:
