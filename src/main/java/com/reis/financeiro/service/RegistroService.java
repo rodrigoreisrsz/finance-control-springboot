@@ -9,6 +9,7 @@ import com.reis.financeiro.repository.RegistroRepository;
 import com.reis.financeiro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -34,8 +35,10 @@ import java.util.List;
             return registros;
         }
 
-        public RegistroResponse adicionarRegistro( Long userId, String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistro){
-            User userExists = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User inexistente."));
+        @Transactional
+        public RegistroResponse adicionarRegistro(Long userId, String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistro){
+            User userExists = userRepository.findByIdForUpdate(userId)
+                    .orElseThrow(() -> new RuntimeException("User inexistente."));
             Registro registro = new Registro(userExists, nome, valor,  descricao, data, tipoRegistro);
 
             saldoService.atualizarSaldo(userExists, valor, tipoRegistro);
@@ -43,7 +46,10 @@ import java.util.List;
             return new RegistroResponse(registroSalvo);
         }
 
+        @Transactional
         public void deletarRegistro(long id, Long userId){
+            userRepository.findByIdForUpdate(userId)
+                    .orElseThrow(() -> new RuntimeException("Registro não encontrado."));
             Registro registro = repository.findByIdAndUserId(id, userId)
                     .orElseThrow(() -> new RuntimeException("Registro não encontrado."));
 
@@ -58,7 +64,10 @@ import java.util.List;
             Registro registro = repository.findByIdAndUserId(id, userId).orElseThrow(()-> new RegistroNotFoundException());
             return new RegistroResponse(registro);
         }
+        @Transactional
         public RegistroResponse editar(long id, long userId,  String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistroDTO ){
+            userRepository.findByIdForUpdate(userId)
+                    .orElseThrow(() -> new RuntimeException("Registro não encontrado."));
             Registro registroExistente = repository.findByIdAndUserId(id, userId)
                     .orElseThrow(() -> new RuntimeException("Registro não encontrado."));
 

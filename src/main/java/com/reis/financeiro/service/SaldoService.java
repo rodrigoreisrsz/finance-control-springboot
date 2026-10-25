@@ -8,6 +8,7 @@ import com.reis.financeiro.repository.SaldoRepository;
 import com.reis.financeiro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -22,13 +23,14 @@ public class SaldoService {
         this.repository = repository;
         this.userRepository = userRepository;
     }
-
+    @Transactional
     public Saldo buscaOuCriaSaldo(Long userId){
+        User user = userRepository.findByIdForUpdate(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário inexistente."));
         Optional<Saldo> saldoExistente = repository.findByUserId(userId);
         if(saldoExistente.isPresent()){
             return saldoExistente.get();
         }else{
-            User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Usuário inexistente."));
             Saldo saldo = new Saldo();
             saldo.setSaldo(BigDecimal.ZERO);
             saldo.setUser(user);
@@ -38,6 +40,7 @@ public class SaldoService {
 
 
     }
+    @Transactional
     public void atualizarSaldo(User user, BigDecimal valor, TipoRegistro tipo){
         Saldo saldo = buscaOuCriaSaldo(user.getUserId() );
         if(tipo == TipoRegistro.GANHO){

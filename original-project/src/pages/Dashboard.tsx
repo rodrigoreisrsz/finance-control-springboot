@@ -5,14 +5,13 @@ import SummaryCard from '../components/SummaryCard'
 import MonthlyChart from '../components/MonthlyChart'
 import GoalCard from '../components/GoalCard'
 import RecentTransactions from '../components/RecentTransactions'
+import AnimatedNumber from '../components/AnimatedNumber'
 import Topbar from '../components/Topbar'
 import ThemeToggle from '../components/ThemeToggle'
 import { useTheme } from '../contexts/ThemeContext'
 import { listarRegistros, type Registro } from '../services/registros'
 import { listarCofres, type Cofre } from '../services/cofres'
 import './Dashboard.css'
-
-const moeda = (valor: number) => valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 function Dashboard() {
   // O layout começa no tema claro; o botão permite alternar durante o uso.
@@ -61,7 +60,7 @@ function Dashboard() {
     <Sidebar />
     <main className="dashboard-content" id="topo">
       <Topbar onSearch={setSearch} />
-      <header className="dashboard-header">
+      <header className="dashboard-header page-stagger page-stagger-1">
         <div className="dashboard-welcome"><h1>Olá!</h1><p>Aqui está um resumo da sua vida financeira.</p></div>
         <div className="dashboard-header-actions"><ThemeToggle isDark={isDark} onToggle={toggleTheme} /><div className="dashboard-date"><span aria-hidden="true">▦</span> Hoje, {hoje}</div></div>
       </header>
@@ -70,13 +69,13 @@ function Dashboard() {
       {carregando && <p className="loading-message">Carregando seus dados financeiros…</p>}
 
       <section className="summary-grid" aria-label="Resumo financeiro">
-        <SummaryCard title="Saldo atual" value={moeda(resumo.saldo)} description="Entradas menos despesas" icon="▣" tone="green" />
-        <SummaryCard title="Entradas" value={moeda(resumo.entradas)} description="Total de ganhos cadastrados" icon="↑" tone="green" animation={animatedArrow === 'income' ? 'income' : undefined} />
-        <SummaryCard title="Despesas" value={moeda(resumo.despesas)} description="Total de gastos cadastrados" icon="↓" tone="red" animation={animatedArrow === 'expense' ? 'expense' : undefined} />
-        <SummaryCard title="Cofres" value={moeda(resumo.guardado)} description={`${cofres.length} ${cofres.length === 1 ? 'meta ativa' : 'metas ativas'}`} icon="◎" tone="green" />
+        <SummaryCard title="Saldo atual" value={resumo.saldo} description="Entradas menos despesas" icon="▣" tone="green" entryOrder={1} />
+        <SummaryCard title="Entradas" value={resumo.entradas} description="Total de ganhos cadastrados" icon="↑" tone="green" animation={animatedArrow === 'income' ? 'income' : undefined} entryOrder={2} />
+        <SummaryCard title="Despesas" value={resumo.despesas} description="Total de gastos cadastrados" icon="↓" tone="red" animation={animatedArrow === 'expense' ? 'expense' : undefined} entryOrder={3} />
+        <SummaryCard title="Cofres" value={resumo.guardado} description={`${cofres.length} ${cofres.length === 1 ? 'meta ativa' : 'metas ativas'}`} icon="◎" tone="green" entryOrder={4} />
       </section>
 
-      <section className="dashboard-main-grid">
+      <section className="dashboard-main-grid page-stagger page-stagger-3">
         <MonthlyChart registros={registros} />
         <section className="goals-panel" id="cofres">
           <div className="section-heading"><div><h2>Cofres e metas</h2><p>Acompanhe o progresso dos seus objetivos</p></div><Link to="/cofres" className="text-link">Ver todos →</Link></div>
@@ -90,18 +89,18 @@ function Dashboard() {
         </aside>
       </section>
 
-      <section className="dashboard-bottom-grid" id="transacoes">
+      <section className="dashboard-bottom-grid page-stagger page-stagger-4" id="transacoes">
         <RecentTransactions registros={registros} search={search} />
         <section className="distribution-card" id="distribuicao">
           <div className="section-heading"><div><h2>Distribuição financeira</h2><p>Proporção entre entradas e despesas</p></div></div>
           {totalMovimentado > 0 ? <div className="distribution-content">
-            <div className="donut-chart" style={{ background: `conic-gradient(#16a34a 0 ${percentualEntradas}%, #3b82f6 ${percentualEntradas}% 100%)` }}><div className="donut-hole"><strong>100%</strong><span>movimentado</span></div></div>
-            <div className="distribution-legend"><div><i className="legend-dot income-dot"/><span>Entradas</span><strong>{totalMovimentado ? Math.round(percentualEntradas) : 0}%</strong></div><div><i className="legend-dot expense-dot"/><span>Despesas</span><strong>{totalMovimentado ? Math.round(100 - percentualEntradas) : 0}%</strong></div></div>
+            <div key={percentualEntradas} className="donut-chart chart-reveal" style={{ background: `conic-gradient(#16a34a 0 ${percentualEntradas}%, #ef4444 ${percentualEntradas}% 100%)` }}><div className="donut-hole"><strong><AnimatedNumber value={100} format="percent" /></strong><span>movimentado</span></div></div>
+            <div className="distribution-legend"><div><i className="legend-dot income-dot"/><span>Entradas</span><strong><AnimatedNumber value={totalMovimentado ? Math.round(percentualEntradas) : 0} format="percent" /></strong></div><div><i className="legend-dot expense-dot" style={{ backgroundColor: '#ef4444' }}/><span>Despesas</span><strong><AnimatedNumber value={totalMovimentado ? Math.round(100 - percentualEntradas) : 0} format="percent" /></strong></div></div>
           </div> : <div className="distribution-empty">Cadastre entradas e despesas para visualizar sua distribuição financeira.</div>}
         </section>
       </section>
 
-      <section className="motivation-banner"><div className="banner-plant" aria-hidden="true">🌱</div><div><h2>Seus objetivos importam!</h2><p>Continue firme. Cada pequena conquista aproxima você dos seus sonhos.</p></div>      <Link to="/cofres" className="secondary-action">Ver cofres</Link><span className="banner-arrow" aria-hidden="true">›</span></section>    </main>
+      <section className="motivation-banner page-stagger page-stagger-4"><div className="banner-plant" aria-hidden="true">🌱</div><div><h2>Seus objetivos importam!</h2><p>Continue firme. Cada pequena conquista aproxima você dos seus sonhos.</p></div>      <Link to="/cofres" className="secondary-action">Ver cofres</Link><span className="banner-arrow" aria-hidden="true">›</span></section>    </main>
   </div>
 }
 

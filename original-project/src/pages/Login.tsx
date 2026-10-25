@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { login } from '../services/authService'
+import { setCurrentAccountId } from '../services/profilePhoto'
 import './Login.css'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
@@ -24,6 +25,7 @@ function Login() {
       const user = await login({ email, password })
 
       sessionStorage.setItem('jwt', user.jwt)
+      setCurrentAccountId(user.id)
       navigate('/dashboard')
     } catch (err) {
       setError(
@@ -38,7 +40,7 @@ function Login() {
 
   return (
     <main className="login-page">
-      <section className="login-brand">
+      <section className="login-brand page-stagger page-stagger-1">
         <h1>Meu Financeiro</h1>
 
         <div className="login-brand-content">
@@ -85,7 +87,7 @@ function Login() {
         </div>
       </section>
 
-      <section className="login-form-section">
+      <section className="login-form-section page-stagger page-stagger-2">
         <div className="login-form-container">
           <h2>Bem-vindo de volta!</h2>
           <p>Entre na sua conta para continuar.</p>

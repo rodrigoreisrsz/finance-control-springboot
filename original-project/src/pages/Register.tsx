@@ -39,7 +39,7 @@ function Register() {
 
   return (
     <main className="login-page register-page">
-      <section className="login-brand">
+      <section className="login-brand page-stagger page-stagger-1">
         <h1>Meu Financeiro</h1>
         <div className="login-brand-content">
           <div className="login-brand-copy">
@@ -70,7 +70,7 @@ function Register() {
         <div className="login-brand-footer"><span>CONTROLE</span><i /> <span>CLAREZA</span><i /> <span>TRANQUILIDADE</span></div>
       </section>
 
-      <section className="login-form-section">
+      <section className="login-form-section page-stagger page-stagger-2">
         <div className="login-form-container register-form-container">
           <span className="form-kicker">SUA JORNADA COMEÇA AQUI</span>
           <h2>Crie sua conta</h2>

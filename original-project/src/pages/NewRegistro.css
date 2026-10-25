@@ -1,12 +1,6 @@
 .new-registro-content {
   max-width: 1500px;
   margin: 0 auto;
-  animation: registro-page-enter 0.35s ease both;
-}
-
-@keyframes registro-page-enter {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .new-registro-topline {

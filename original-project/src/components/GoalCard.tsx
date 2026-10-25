@@ -1,4 +1,5 @@
 import './GoalCard.css'
+import AnimatedNumber from './AnimatedNumber'
 
 type GoalCardProps = {
     name: string
@@ -14,16 +15,11 @@ function GoalCard({
     const percentage = 
     target > 0 ? Math.min((current / target) * 100, 100) : 0;
 
-    const formatCurrency = (value: number) => value.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });
-
     return(
         <article className="goal-card">
             <div className="goal-card-header">
                 <h3>{name}</h3>
-                <span>{Math.round(percentage)}%</span>
+                <span><AnimatedNumber value={Math.round(percentage)} format="percent" /></span>
             </div>
 
             <div className="goal-progress-track"
@@ -33,14 +29,14 @@ function GoalCard({
             aria-valuemin={0}
             aria-valuemax={100}
             >
-                <div className="goal-progress-fill"
+                <div className="goal-progress-fill goal-progress-enter"
                 style={{ width: `${percentage}%` }}
                 />
 
             </div>
             <p className="goal-values">
-                <strong>{formatCurrency(current)}</strong>
-                <span>de {formatCurrency(target)}</span>
+                <strong><AnimatedNumber value={current} /></strong>
+                <span>de <AnimatedNumber value={target} /></span>
             </p>
         </article>
     )

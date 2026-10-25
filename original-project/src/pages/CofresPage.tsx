@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import ThemeToggle from '../components/ThemeToggle'
 import Topbar from '../components/Topbar'
+import AnimatedNumber from '../components/AnimatedNumber'
 import { useTheme } from '../contexts/ThemeContext'
 import {
   criarAporte,
@@ -16,7 +17,6 @@ import {
 } from '../services/cofres'
 import './CofresPage.css'
 
-const moeda = (valor: number) => valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const formatarData = (data: string | null | undefined) => {
   if (!data) return 'Data indisponível'
   const [ano, mes, dia] = data.split('-')
@@ -236,7 +236,7 @@ function CofresPage() {
       <main className="dashboard-content cofres-page-content">
         <Topbar onSearch={setSearch} />
 
-        <header className="cofres-header">
+        <header className="cofres-header page-stagger page-stagger-1">
           <div>
             <h1>Cofres e Metas</h1>
             <p>Organize seus objetivos e acompanhe sua evolução financeira.</p>
@@ -260,37 +260,37 @@ function CofresPage() {
         {feedback && <div className="panel-alert success" role="status">{feedback}</div>}
 
         <section className="cofres-summary">
-          <article className="summary-tile">
+          <article className="summary-tile page-stagger page-stagger-1">
             <div className="summary-header">
               <span className="summary-icon green">◍</span>
               <span className="summary-label">Total guardado</span>
             </div>
-            <strong>{moeda(totalGuardado)}</strong>
-            <small>de {moeda(totalMeta || 0)}</small>
+            <strong><AnimatedNumber value={totalGuardado} /></strong>
+            <small>de <AnimatedNumber value={totalMeta || 0} /></small>
           </article>
 
-          <article className="summary-tile progress-tile">
+          <article className="summary-tile progress-tile page-stagger page-stagger-2">
             <div className="summary-header">
               <span className="summary-icon green">◔</span>
               <span className="summary-label">Progresso geral</span>
             </div>
-            <div className="summary-ring" style={{ background: `conic-gradient(#20c997 ${progressoGeral}%, rgba(148,163,184,.28) 0)` }}>
-              <span>{Math.round(progressoGeral)}%</span>
+            <div key={progressoGeral} className="summary-ring chart-reveal" style={{ background: `conic-gradient(#20c997 ${progressoGeral}%, rgba(148,163,184,.28) 0)` }}>
+              <span><AnimatedNumber value={Math.round(progressoGeral)} format="percent" /></span>
             </div>
-            <small>{moeda(totalGuardado)} / {moeda(totalMeta || 0)}</small>
+            <small><AnimatedNumber value={totalGuardado} /> / <AnimatedNumber value={totalMeta || 0} /></small>
           </article>
 
-          <article className="summary-tile">
+          <article className="summary-tile page-stagger page-stagger-3">
             <div className="summary-header">
               <span className="summary-icon green">◎</span>
               <span className="summary-label">Cofres ativos</span>
             </div>
-            <strong>{cofres.length}</strong>
+            <strong><AnimatedNumber value={cofres.length} format="integer" /></strong>
             <small>{cofres.length === 1 ? 'cofre criado' : 'cofres criados'}</small>
           </article>
         </section>
 
-        <section className="cofres-main">
+        <section className="cofres-main page-stagger page-stagger-3">
           <div className="cofres-list-section">
             <div className="section-title-row">
               <h2>Seus cofres e metas</h2>
@@ -328,22 +328,22 @@ function CofresPage() {
 
                       <div className="goal-card-values">
                         <span>Guardado</span>
-                        <strong>{moeda(atual)}</strong>
-                        <small>Meta {moeda(metaValor)}</small>
+                        <strong><AnimatedNumber value={atual} /></strong>
+                        <small>Meta <AnimatedNumber value={metaValor} /></small>
                       </div>
 
                       <div className="goal-progress-track" role="progressbar" aria-label={`Progresso do cofre ${cofre.nome}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(percentual)}>
-                        <div className="goal-progress-fill" style={{ width: `${percentual}%` }} />
+                        <div className="goal-progress-fill goal-progress-enter" style={{ width: `${percentual}%` }} />
                       </div>
 
                       <div className="goal-card-footer">
-                        <span>{Math.round(percentual)}%</span>
-                        <span>{restante > 0 ? `Faltam ${moeda(restante)}` : 'Meta alcançada'}</span>
+                        <span><AnimatedNumber value={Math.round(percentual)} format="percent" /></span>
+                        <span>{restante > 0 ? <>Faltam <AnimatedNumber value={restante} /></> : 'Meta alcançada'}</span>
                       </div>
 
                       <div className="goal-card-meta">
                         <span>Meta</span>
-                        <strong>{moeda(metaValor)}</strong>
+                        <strong><AnimatedNumber value={metaValor} /></strong>
                       </div>
                     </article>
                   )
@@ -447,11 +447,11 @@ function CofresPage() {
               <p>O endpoint /cofre/aportes retorna todos os aportes do usuário e pode ser filtrado pelo cofre selecionado.</p>
               <div className="history-summary">
                 <span>Valor atual</span>
-                <strong>{moeda(Number(selectedCofre.valorAtual ?? 0))}</strong>
+                <strong><AnimatedNumber value={Number(selectedCofre.valorAtual ?? 0)} /></strong>
               </div>
               <div className="history-summary">
                 <span>Meta</span>
-                <strong>{moeda(Number(selectedCofre.meta ?? 0))}</strong>
+                <strong><AnimatedNumber value={Number(selectedCofre.meta ?? 0)} /></strong>
               </div>
 
               {carregandoHistorico ? (
@@ -463,7 +463,7 @@ function CofresPage() {
                   {historicoAportes.map((aporte) => (
                     <div key={aporte.id} className="history-entry">
                       <div>
-                        <strong>{moeda(Number(aporte.valor ?? 0))}</strong>
+                        <strong><AnimatedNumber value={Number(aporte.valor ?? 0)} /></strong>
                         <small>{formatarData(aporte.data)}</small>
                       </div>
                       <span>{aporte.cofre?.nome ?? selectedCofre.nome}</span>

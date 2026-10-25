@@ -2,6 +2,7 @@
 .summary-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:50%;font-size:23px;font-weight:700;color:#059669;background:#dcfce7}
 .tone-red .summary-icon{color:#ef4444;background:#fee2e2}.tone-blue .summary-icon{color:#2563eb;background:#dbeafe}.tone-purple .summary-icon{color:#7c3aed;background:#ede9fe}
 .summary-card-body{min-width:0}.summary-card h3{margin:3px 0 12px;color:var(--muted-text);font-size:12px;font-weight:600}.summary-value{margin:0 0 9px;color:var(--text-color);font-size:clamp(17px,1.5vw,23px);font-weight:750;letter-spacing:-.45px;overflow-wrap:anywhere}.summary-card span{color:var(--muted-text);font-size:10px;line-height:1.4}
+.summary-card .summary-value .animated-number{color:inherit;font-size:inherit;line-height:inherit}
 
 
 /* Movimento suave da seta após adicionar uma transação. */

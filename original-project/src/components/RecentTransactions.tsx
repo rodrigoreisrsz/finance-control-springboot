@@ -1,8 +1,8 @@
 import type { Registro } from '../services/registros'
+import AnimatedNumber from './AnimatedNumber'
 import './RecentTransactions.css'
 
 type Props = { registros: Registro[]; search?: string }
-const moeda = (value: number | string) => Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const dataPt = (value: string) => {
   if (!value) return '—'
   const [year, month, day] = value.split('-')
@@ -19,7 +19,7 @@ function RecentTransactions({ registros, search = '' }: Props) {
     <section className="transactions-card">
       <div className="section-heading">
         <div><h2>Transações recentes</h2><p>Seus registros mais recentes</p></div>
-        <span className="transaction-count">{filtrados.length} registros</span>
+        <span className="transaction-count"><AnimatedNumber value={filtrados.length} format="integer" /> registros</span>
       </div>
       <div className="transactions-table-wrapper">
         <table className="transactions-table">
@@ -29,7 +29,7 @@ function RecentTransactions({ registros, search = '' }: Props) {
               <td><strong>{r.nome}</strong><small>{r.descricao || 'Sem descrição'}</small></td>
               <td>{dataPt(r.data)}</td>
               <td><span className={`type-pill ${r.tipoRegistro === 'GANHO' ? 'income' : 'expense'}`}>{r.tipoRegistro === 'GANHO' ? 'Entrada' : 'Despesa'}</span></td>
-              <td className={r.tipoRegistro === 'GANHO' ? 'transaction-income' : 'transaction-expense'}>{r.tipoRegistro === 'GANHO' ? '+' : '−'} {moeda(r.valor)}</td>
+              <td className={r.tipoRegistro === 'GANHO' ? 'transaction-income' : 'transaction-expense'}>{r.tipoRegistro === 'GANHO' ? '+' : '−'} <AnimatedNumber value={Number(r.valor)} /></td>
             </tr>)}
             {filtrados.length === 0 && <tr><td colSpan={4} className="empty-state">Nenhum registro encontrado.</td></tr>}
           </tbody>

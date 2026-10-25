@@ -2,11 +2,14 @@ package com.reis.financeiro.controllers;
 
 import com.reis.financeiro.dto.request.LoginDTO;
 import com.reis.financeiro.dto.request.UserCreateDTO;
+import com.reis.financeiro.dto.response.UserProfileResponse;
 import com.reis.financeiro.dto.response.UserResponse;
 import com.reis.financeiro.entities.User;
+import com.reis.financeiro.security.UserJWT;
 import com.reis.financeiro.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,5 +34,17 @@ public class UserController {
     public ResponseEntity<UserResponse> login(@RequestBody @Valid LoginDTO loginDTO){
         UserResponse response = userService.login(loginDTO.getEmail(), loginDTO.getPassword());
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserProfileResponse> perfil(
+            @AuthenticationPrincipal UserJWT usuarioAutenticado
+    ) {
+        User usuario = usuarioAutenticado.getUser();
+        return ResponseEntity.ok(new UserProfileResponse(
+                usuario.getUserId(),
+                usuario.getName(),
+                usuario.getEmail()
+        ));
     }
 }

@@ -58,7 +58,7 @@ function NewRegistro() {
     <div className={`dashboard-layout new-registro-layout${isDark ? ' dark' : ''}`}>
       <Sidebar />
       <main className="dashboard-content new-registro-content">
-        <header className="new-registro-topline">
+        <header className="new-registro-topline page-stagger page-stagger-1">
           <div>
             <Link to="/dashboard" className="back-link">← Voltar ao painel</Link>
             <p className="new-registro-eyebrow">MOVIMENTAÇÃO FINANCEIRA</p>
@@ -68,7 +68,7 @@ function NewRegistro() {
           <div className="new-registro-top-icon" aria-hidden="true">＋</div>
         </header>
 
-        <div className="new-registro-columns">
+        <div className="new-registro-columns page-stagger page-stagger-2">
           <section className="new-registro-form-card">
             <div className="new-registro-step"><span>1</span><div><h2>Que tipo de registro?</h2><p>Escolha uma opção para continuar.</p></div></div>
 

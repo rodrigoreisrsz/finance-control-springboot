@@ -24,7 +24,7 @@ function MonthlyChart({ registros }: Props) {
   return <section className="monthly-chart">
     <div className="section-heading"><div><h2>Entradas x despesas</h2><p className="chart-subtitles">Movimentação dos últimos seis meses</p></div></div>
     <div className="chart-legend"><span><i className="legend-income" /> Entradas</span><span><i className="legend-expense" /> Despesas</span></div>
-    <div className="chart-bars">
+    <div className="chart-bars" key={monthlyData.map((item) => `${item.month}:${item.entradas}:${item.despesas}`).join('|')}>
       {monthlyData.map((item) => <div className="chart-month" key={item.month}>
         <div className="chart-columns">
           <div className="chart-bar chart-income" style={{ height: `${item.entradas / maxValue * 100}%` }} title={`Entradas: ${moeda(item.entradas)}`} />
