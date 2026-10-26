@@ -41,11 +41,11 @@ function Login() {
   return (
     <main className="login-page">
       <section className="login-brand page-stagger page-stagger-1">
-        <h1>Meu Financeiro</h1>
+        <h1>FinanceControl</h1>
 
         <div className="login-brand-content">
           <div className="login-brand-copy">
-            <span className="login-eyebrow">CONTROLE FINANCEIRO SIMPLES</span>
+            <span className="login-eyebrow">CONTROLE, VISUALIZE, EXPORTE</span>
             <h2>Sua vida financeira, <span>mais leve.</span></h2>
             <p>
               Organize seus gastos, acompanhe suas metas e tenha
