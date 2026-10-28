@@ -19,6 +19,11 @@ function Login() {
     event.preventDefault()
 
     setError('')
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setError('Por favor, insira um e-mail válido.')
+      return
+    }
     setLoading(true)
 
     try {
