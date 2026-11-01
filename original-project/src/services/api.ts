@@ -24,6 +24,14 @@ export async function apiFetch(
 
   if (response.status === 401) {
     sessionStorage.removeItem('jwt')
+    if (window.location.pathname !== '/login' && window.location.pathname !== '/cadastro') {
+      sessionStorage.setItem(
+        'auth:return-to',
+        `${window.location.pathname}${window.location.search}${window.location.hash}`,
+      )
+      sessionStorage.setItem('auth:expired', 'true')
+      window.location.replace('/login')
+    }
   }
 
   return response

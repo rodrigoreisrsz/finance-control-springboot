@@ -14,6 +14,11 @@ function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [sessionExpired] = useState(() => {
+    const expired = sessionStorage.getItem('auth:expired') === 'true'
+    sessionStorage.removeItem('auth:expired')
+    return expired
+  })
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -31,7 +36,9 @@ function Login() {
 
       sessionStorage.setItem('jwt', user.jwt)
       setCurrentAccountId(user.id)
-      navigate('/dashboard')
+      const returnTo = sessionStorage.getItem('auth:return-to')
+      sessionStorage.removeItem('auth:return-to')
+      navigate(returnTo?.startsWith('/') ? returnTo : '/dashboard', { replace: true })
     } catch (err) {
       setError(
         err instanceof Error
@@ -96,6 +103,7 @@ function Login() {
         <div className="login-form-container">
           <h2>Bem-vindo de volta!</h2>
           <p>Entre na sua conta para continuar.</p>
+          {sessionExpired && <p className="auth-success" role="status">Sua sessão expirou ou deixou de ser válida. Entre novamente para continuar.</p>}
           {registrationSuccess && <p className="auth-success" role="status">Conta criada com sucesso! Faça login para continuar.</p>}
 
           <form onSubmit={handleSubmit}>
