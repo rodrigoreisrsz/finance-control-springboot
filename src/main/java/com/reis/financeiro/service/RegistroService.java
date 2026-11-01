@@ -2,6 +2,7 @@ package com.reis.financeiro.service;
 
 import com.reis.financeiro.dto.response.RegistroResponse;
 import com.reis.financeiro.entities.Registro;
+import com.reis.financeiro.entities.CategoriaRegistro;
 import com.reis.financeiro.entities.TipoRegistro;
 import com.reis.financeiro.entities.User;
 import com.reis.financeiro.exceptions.RegistroNotFoundException;
@@ -37,9 +38,16 @@ import java.util.List;
 
         @Transactional
         public RegistroResponse adicionarRegistro(Long userId, String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistro){
+            return adicionarRegistro(userId, nome, valor, descricao, data, tipoRegistro, CategoriaRegistro.OUTROS);
+        }
+
+        @Transactional
+        public RegistroResponse adicionarRegistro(Long userId, String nome, BigDecimal valor, String descricao,
+                                                   LocalDate data, TipoRegistro tipoRegistro, CategoriaRegistro categoria){
             User userExists = userRepository.findByIdForUpdate(userId)
                     .orElseThrow(() -> new RuntimeException("User inexistente."));
-            Registro registro = new Registro(userExists, nome, valor,  descricao, data, tipoRegistro);
+            Registro registro = new Registro(userExists, nome, valor, descricao, data, tipoRegistro,
+                    categoria == null ? CategoriaRegistro.OUTROS : categoria);
 
             saldoService.atualizarSaldo(userExists, valor, tipoRegistro);
             Registro registroSalvo = repository.save(registro);
@@ -66,6 +74,12 @@ import java.util.List;
         }
         @Transactional
         public RegistroResponse editar(long id, long userId,  String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistroDTO ){
+            return editar(id, userId, nome, valor, descricao, data, tipoRegistroDTO, null);
+        }
+
+        @Transactional
+        public RegistroResponse editar(long id, long userId, String nome, BigDecimal valor, String descricao,
+                                       LocalDate data, TipoRegistro tipoRegistroDTO, CategoriaRegistro categoria){
             userRepository.findByIdForUpdate(userId)
                     .orElseThrow(() -> new RuntimeException("Registro não encontrado."));
             Registro registroExistente = repository.findByIdAndUserId(id, userId)
@@ -82,6 +96,9 @@ import java.util.List;
             registroExistente.setValor(valor);
             registroExistente.setDescricao(descricao);
             registroExistente.setTipoRegistro(tipoRegistroDTO);
+            if (categoria != null) {
+                registroExistente.setCategoria(categoria);
+            }
             saldoService.atualizarSaldo(registroExistente.getUser(), valor, tipoRegistroDTO);
             repository.save(registroExistente);
             return new RegistroResponse(registroExistente);

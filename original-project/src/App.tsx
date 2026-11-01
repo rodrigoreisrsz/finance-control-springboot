@@ -7,6 +7,8 @@ import NewRegistro from './pages/NewRegistro'
 import CofresPage from './pages/CofresPage'
 import RelatoriosPage from './pages/RelatoriosPage'
 import ConfiguracoesPage from './pages/ConfiguracoesPage'
+import OrcamentosPage from './pages/OrcamentosPage'
+import RecorrenciasPage from './pages/RecorrenciasPage'
 import PrivateRoute from './components/PrivateRoute'
 import PageTransition from './components/PageTransition'
 
@@ -22,6 +24,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/cofres" element={<CofresPage />} />
           <Route path="/relatorios" element={<RelatoriosPage />} />
+          <Route path="/orcamentos" element={<OrcamentosPage />} />
+          <Route path="/recorrencias" element={<RecorrenciasPage />} />
           <Route path="/configuracoes" element={<ConfiguracoesPage />} />
           <Route path="/registros/novo" element={<NewRegistro />} />
         </Route>

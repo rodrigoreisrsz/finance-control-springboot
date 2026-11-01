@@ -42,9 +42,13 @@ public class RegistroController {
     @PostMapping
     //@ResponseStatus(HttpStatus.CREATED) tbm retona 201 CREATED
     public ResponseEntity<RegistroResponse> criar(@RequestBody @Valid RegistroCreateDTO registroCreate, @AuthenticationPrincipal UserJWT userAutheticated ){
-        RegistroResponse response = service.adicionarRegistro(userAutheticated.getUser().getUserId() , registroCreate.getNome(),
+        RegistroResponse response = registroCreate.getCategoria() == null
+                ? service.adicionarRegistro(userAutheticated.getUser().getUserId(), registroCreate.getNome(),
                 registroCreate.getValor(), registroCreate.getDescricao(), registroCreate.getData(),
-                registroCreate.getTipoRegistro());
+                registroCreate.getTipoRegistro())
+                : service.adicionarRegistro(userAutheticated.getUser().getUserId(), registroCreate.getNome(),
+                registroCreate.getValor(), registroCreate.getDescricao(), registroCreate.getData(),
+                registroCreate.getTipoRegistro(), registroCreate.getCategoria());
 
         return  ResponseEntity.status(HttpStatus.CREATED).body(response); // retorna 201 - CREATED
     }
@@ -58,9 +62,13 @@ public class RegistroController {
                                                    @RequestBody @Valid RegistroCreateDTO registroCreateDTO,
                                                    @AuthenticationPrincipal UserJWT userAutheticated
     ){
-        RegistroResponse response =  service.editar(id, userAutheticated.getUser().getUserId() , registroCreateDTO.getNome(),
+        RegistroResponse response = registroCreateDTO.getCategoria() == null
+                ? service.editar(id, userAutheticated.getUser().getUserId(), registroCreateDTO.getNome(),
                 registroCreateDTO.getValor(), registroCreateDTO.getDescricao(), registroCreateDTO.getData(),
-                registroCreateDTO.getTipoRegistro());
+                registroCreateDTO.getTipoRegistro())
+                : service.editar(id, userAutheticated.getUser().getUserId(), registroCreateDTO.getNome(),
+                registroCreateDTO.getValor(), registroCreateDTO.getDescricao(), registroCreateDTO.getData(),
+                registroCreateDTO.getTipoRegistro(), registroCreateDTO.getCategoria());
         return  ResponseEntity.ok(response);
     }
 }

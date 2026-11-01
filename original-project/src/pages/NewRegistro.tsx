@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useTheme } from '../contexts/ThemeContext'
 import { criarRegistro, type TipoRegistro } from '../services/registros'
+import { categoriasRegistro, rotuloCategoria, type CategoriaRegistro } from '../services/categorias'
 import './NewRegistro.css'
 
 function NewRegistro() {
   const navigate = useNavigate()
   const { isDark } = useTheme()
   const [tipo, setTipo] = useState<TipoRegistro>('GANHO')
+  const [categoria, setCategoria] = useState<CategoriaRegistro>('RECEITAS')
   const [nome, setNome] = useState('')
   const [valor, setValor] = useState('')
   const [data, setData] = useState(new Date().toLocaleDateString('en-CA'))
@@ -44,6 +46,7 @@ function NewRegistro() {
         data,
         descricao: descricao.trim(),
         tipoRegistro: tipo,
+        categoria,
       })
       setSucesso(true)
       window.setTimeout(() => navigate('/dashboard', { state: { registroAdicionado: tipo } }), 650)
@@ -73,12 +76,12 @@ function NewRegistro() {
             <div className="new-registro-step"><span>1</span><div><h2>Que tipo de registro?</h2><p>Escolha uma opção para continuar.</p></div></div>
 
             <div className="registro-type-options" role="group" aria-label="Tipo de registro">
-              <button type="button" className={`registro-type-option income-option${tipo === 'GANHO' ? ' selected' : ''}`} aria-pressed={tipo === 'GANHO'} onClick={() => setTipo('GANHO')}>
+              <button type="button" className={`registro-type-option income-option${tipo === 'GANHO' ? ' selected' : ''}`} aria-pressed={tipo === 'GANHO'} onClick={() => { setTipo('GANHO'); setCategoria('RECEITAS') }}>
                 <span className="registro-option-icon">↙</span>
                 <span className="registro-option-copy"><strong>Entrada</strong><small>Dinheiro que você recebeu</small></span>
                 <span className="registro-option-check">{tipo === 'GANHO' ? '✓' : '+'}</span>
               </button>
-              <button type="button" className={`registro-type-option expense-option${tipo === 'GASTO' ? ' selected' : ''}`} aria-pressed={tipo === 'GASTO'} onClick={() => setTipo('GASTO')}>
+              <button type="button" className={`registro-type-option expense-option${tipo === 'GASTO' ? ' selected' : ''}`} aria-pressed={tipo === 'GASTO'} onClick={() => { setTipo('GASTO'); setCategoria('OUTROS') }}>
                 <span className="registro-option-icon">↗</span>
                 <span className="registro-option-copy"><strong>Despesa</strong><small>Dinheiro que você gastou</small></span>
                 <span className="registro-option-check">{tipo === 'GASTO' ? '✓' : '+'}</span>
@@ -101,6 +104,13 @@ function NewRegistro() {
                   <input id="registro-data" type="date" value={data} onChange={(event) => setData(event.target.value)} required />
                 </div>
               </div>
+
+              <label htmlFor="registro-categoria">Categoria <span>*</span></label>
+              <select id="registro-categoria" value={categoria} onChange={(event) => setCategoria(event.target.value as CategoriaRegistro)} required>
+                {categoriasRegistro.map((item) => (
+                  <option key={item.value} value={item.value}>{item.label}</option>
+                ))}
+              </select>
 
               <label htmlFor="registro-descricao">Descrição <small>(opcional)</small></label>
               <textarea id="registro-descricao" value={descricao} onChange={(event) => setDescricao(event.target.value)} placeholder="Adicione uma observação para lembrar depois..." rows={3} maxLength={300} />
@@ -125,7 +135,7 @@ function NewRegistro() {
             <strong className="preview-amount">{tipo === 'GASTO' ? '− ' : '+ '}{(Number(valor.replace(',', '.')) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>
             <div className="preview-divider" />
             <div className="preview-detail"><span>Data</span><strong>{data ? new Date(`${data}T12:00:00`).toLocaleDateString('pt-BR') : 'Não definida'}</strong></div>
-            <div className="preview-detail"><span>Categoria</span><strong>{tipo === 'GANHO' ? 'Entrada' : 'Despesa'}</strong></div>
+            <div className="preview-detail"><span>Categoria</span><strong>{rotuloCategoria(categoria)}</strong></div>
             <p className="preview-tip">{tipo === 'GANHO' ? '✨ Cada entrada é um passo para seus objetivos.' : '💡 Acompanhar despesas ajuda você a cuidar do seu dinheiro.'}</p>
           </aside>
         </div>

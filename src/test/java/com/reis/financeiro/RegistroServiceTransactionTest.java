@@ -3,6 +3,8 @@ package com.reis.financeiro;
 import com.reis.financeiro.entities.TipoRegistro;
 import com.reis.financeiro.entities.User;
 import com.reis.financeiro.repository.RegistroRepository;
+import com.reis.financeiro.repository.OrcamentoRepository;
+import com.reis.financeiro.repository.RecorrenciaRepository;
 import com.reis.financeiro.repository.SaldoRepository;
 import com.reis.financeiro.repository.UserRepository;
 import com.reis.financeiro.service.RegistroService;
@@ -34,6 +36,12 @@ class RegistroServiceTransactionTest {
     private RegistroRepository registroRepository;
 
     @Autowired
+    private OrcamentoRepository orcamentoRepository;
+
+    @Autowired
+    private RecorrenciaRepository recorrenciaRepository;
+
+    @Autowired
     private SaldoRepository saldoRepository;
 
     @Autowired
@@ -43,6 +51,8 @@ class RegistroServiceTransactionTest {
 
     @BeforeEach
     void prepararBancoDeTeste() {
+        recorrenciaRepository.deleteAll();
+        orcamentoRepository.deleteAll();
         registroRepository.deleteAll();
         saldoRepository.deleteAll();
         userRepository.deleteAll();

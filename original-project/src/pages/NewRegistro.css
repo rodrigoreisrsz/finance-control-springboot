@@ -160,6 +160,7 @@
 .new-registro-form label > span { color: #dc2626; }
 .new-registro-form label small { color: var(--muted-text); font-weight: 400; }
 .new-registro-form input,
+.new-registro-form select,
 .new-registro-form textarea {
   width: 100%;
   min-width: 0;
@@ -173,6 +174,7 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 .new-registro-form input:focus,
+.new-registro-form select:focus,
 .new-registro-form textarea:focus { border-color: #16a34a; background: var(--card-background); box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1); }
 .new-registro-form input::placeholder,
 .new-registro-form textarea::placeholder { color: #94a3b8; }

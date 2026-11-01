@@ -5,6 +5,7 @@ import Topbar from '../components/Topbar'
 import AnimatedNumber from '../components/AnimatedNumber'
 import { useTheme } from '../contexts/ThemeContext'
 import { listarRegistros, type Registro } from '../services/registros'
+import { obterCategoriaRegistro, rotuloCategoria } from '../services/categorias'
 import './RelatoriosPage.css'
 
 const moeda = (valor: number) => valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -15,19 +16,6 @@ const valorSeguro = (valor: number | string | null | undefined) => {
 
 const formatarMes = (date: Date) =>
   new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(date)
-
-const inferCategoria = (texto: string) => {
-  const valor = texto.toLowerCase()
-
-  if (/(aluguel|imovel|condominio|casa|moradia|iptu|prestacao)/.test(valor)) return 'Moradia'
-  if (/(mercado|supermercado|alimentacao|comida|padaria|restaurante|lanches|delivery|cafe)/.test(valor)) return 'Alimentação'
-  if (/(transporte|onibus|uber|combustivel|gasolina|carro|metro|taxi|estacionamento)/.test(valor)) return 'Transporte'
-  if (/(saude|medico|farmacia|consulta|hospital|dentista|remedio)/.test(valor)) return 'Saúde'
-  if (/(estudo|curso|escola|faculdade|livro|ensino)/.test(valor)) return 'Educação'
-  if (/(lazer|cinema|streaming|jogo|viagem|turismo|entretenimento)/.test(valor)) return 'Lazer'
-  if (/(salario|bonus|freela|rendimento|ganho|reembolso|venda)/.test(valor)) return 'Receitas'
-  return 'Outros'
-}
 
 function RelatoriosPage() {
   const { isDark, toggleTheme } = useTheme()
@@ -106,7 +94,7 @@ function RelatoriosPage() {
     const despesas = registrosDoMes.filter((registro) => registro.tipoRegistro === 'GASTO')
 
     despesas.forEach((registro) => {
-      const categoria = inferCategoria(`${registro.nome} ${registro.descricao}`)
+      const categoria = rotuloCategoria(obterCategoriaRegistro(registro))
       mapa.set(categoria, (mapa.get(categoria) ?? 0) + valorSeguro(registro.valor))
     })
 

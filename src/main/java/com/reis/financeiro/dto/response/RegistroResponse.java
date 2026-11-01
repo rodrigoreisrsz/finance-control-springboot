@@ -14,6 +14,7 @@ public class RegistroResponse {
     private LocalDate data;
     private String descricao;
     private String tipoRegistro;
+    private String categoria;
 
     public RegistroResponse(Registro registroSalvo) {
         this.id = registroSalvo.getId();
@@ -22,6 +23,9 @@ public class RegistroResponse {
         this.data = registroSalvo.getData();
         this.descricao = registroSalvo.getDescricao();
         this.tipoRegistro = registroSalvo.getTipoRegistro().name();
+        this.categoria = registroSalvo.getCategoria() == null
+                ? null
+                : registroSalvo.getCategoria().name();
     }
 
 

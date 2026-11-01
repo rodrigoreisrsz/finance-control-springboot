@@ -18,15 +18,24 @@ public class Registro {
     private LocalDate data;
     @Enumerated(EnumType.STRING)
     private TipoRegistro tipoRegistro;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 32)
+    private CategoriaRegistro categoria;
 
 
     public Registro(User user, String nome, BigDecimal valor, String descricao, LocalDate data, TipoRegistro tipoRegistro) {
+        this(user, nome, valor, descricao, data, tipoRegistro, CategoriaRegistro.OUTROS);
+    }
+
+    public Registro(User user, String nome, BigDecimal valor, String descricao, LocalDate data,
+                    TipoRegistro tipoRegistro, CategoriaRegistro categoria) {
         this.user = user;
         this.nome = nome;
         this.valor = valor;
         this.descricao = descricao;
         this.data = data;
         this.tipoRegistro = tipoRegistro;
+        this.categoria = categoria;
     }
 
 
@@ -99,5 +108,13 @@ public class Registro {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public CategoriaRegistro getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaRegistro categoria) {
+        this.categoria = categoria;
     }
 }

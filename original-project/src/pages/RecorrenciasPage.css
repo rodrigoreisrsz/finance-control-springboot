@@ -1,0 +1,50 @@
+.recurring-columns { display: grid; grid-template-columns: minmax(290px, .82fr) minmax(0, 1.35fr); align-items: start; gap: 16px; }
+.recurring-form-card { display: block; }
+.recurring-form-card > div:first-child { margin-bottom: 16px; }
+.recurring-form { display: grid; gap: 12px; }
+.recurring-form label { display: grid; gap: 6px; color: var(--text-color); font-size: 10px; font-weight: 700; }
+.recurring-form input:not([type="checkbox"]), .recurring-form select, .recurring-form textarea { width: 100%; min-width: 0; padding: 10px 11px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--page-background); color: var(--text-color); font-size: 11px; }
+.recurring-form textarea { resize: vertical; }
+.recurring-form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.recurring-type-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.recurring-type-picker button { padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--page-background); color: var(--muted-text); cursor: pointer; font-size: 11px; font-weight: 700; }
+.recurring-type-picker button.selected.expense { border-color: #ef4444; background: #fff5f5; color: #b91c1c; }
+.recurring-type-picker button.selected.income { border-color: #16a34a; background: #f0fdf4; color: #15803d; }
+.optional-label { color: var(--muted-text); font-weight: 400; }
+.recurring-review-option { display: flex !important; align-items: flex-start; gap: 9px !important; padding: 11px; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; }
+.recurring-review-option input { margin: 2px 0 0; accent-color: #16a34a; }
+.recurring-review-option span { display: grid; gap: 4px; }
+.recurring-review-option strong { color: var(--text-color); font-size: 10px; }
+.recurring-review-option small { color: var(--muted-text); font-size: 9px; font-weight: 400; }
+.recurring-submit { width: 100%; }
+.feature-success { border: 1px solid #bbf7d0; background: #f0fdf4; color: #166534; }
+.recurring-list-heading { display: flex; align-items: center; justify-content: space-between; margin: 3px 0 12px; }
+.recurring-list-heading h2 { margin: 0 0 4px; color: var(--text-color); font-size: 16px; }
+.recurring-list-heading p { margin: 0; color: var(--muted-text); font-size: 10px; }
+.recurring-list { display: grid; gap: 10px; }
+.recurring-card { padding: 15px; border: 1px solid var(--border-color); border-radius: 12px; background: var(--card-background, var(--panel-background)); }
+.recurring-card.paused { opacity: .7; }
+.recurring-card-main { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.recurring-type-icon { display: grid; place-items: center; flex: 0 0 35px; width: 35px; height: 35px; border-radius: 10px; font-size: 19px; font-weight: 700; }
+.recurring-type-icon.expense { background: #fee2e2; color: #b91c1c; }
+.recurring-type-icon.income { background: #dcfce7; color: #15803d; }
+.recurring-card-title { display: grid; gap: 4px; min-width: 0; }
+.recurring-card-title h3 { overflow: hidden; margin: 0; color: var(--text-color); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.recurring-card-title span, .recurring-card-meta { color: var(--muted-text); font-size: 9px; }
+.recurring-card-main > strong { margin-left: auto; font-size: 12px; white-space: nowrap; }
+.expense-amount { color: #dc2626; }
+.income-amount { color: #16a34a; }
+.recurring-card-meta { display: flex; justify-content: space-between; gap: 12px; margin: 13px 0 10px; }
+.recurring-card-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.recurring-card-actions button { min-height: 31px; padding: 0 10px; border: 1px solid var(--border-color); border-radius: 7px; background: var(--page-background); color: var(--text-color); cursor: pointer; font-size: 9px; font-weight: 700; }
+.recurring-card-actions button:disabled { opacity: .6; cursor: wait; }
+.recurring-card-actions button.recurring-confirm { border-color: #15803d; background: #16a34a; color: #fff; }
+.recurring-card-actions button.recurring-remove { color: #b91c1c; }
+.recurring-empty { display: grid; justify-items: center; padding: 36px 20px; border: 1px dashed var(--border-color); border-radius: 12px; text-align: center; }
+.recurring-empty > span { color: #16a34a; font-size: 30px; }
+.recurring-empty strong { margin-top: 8px; color: var(--text-color); font-size: 13px; }
+.recurring-empty p { max-width: 250px; margin: 6px 0 0; color: var(--muted-text); font-size: 10px; line-height: 1.5; }
+.dashboard-layout.dark .recurring-type-picker button.selected.expense { background: rgba(220, 38, 38, .14); }
+.dashboard-layout.dark .recurring-type-picker button.selected.income { background: rgba(22, 163, 74, .14); }
+.dashboard-layout.dark .feature-success { border-color: #14532d; background: rgba(22, 163, 74, .12); color: #bbf7d0; }
+@media (max-width: 980px) { .recurring-columns { grid-template-columns: 1fr; } }

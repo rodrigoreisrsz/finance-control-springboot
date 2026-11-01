@@ -1,4 +1,5 @@
 import { apiFetch } from './api'
+import type { CategoriaRegistro } from './categorias'
 
 export type TipoRegistro = 'GANHO' | 'GASTO'
 
@@ -9,6 +10,7 @@ export interface Registro {
   data: string
   descricao: string
   tipoRegistro: TipoRegistro
+  categoria?: CategoriaRegistro | null
 }
 
 export interface RegistroPayload {
@@ -17,6 +19,7 @@ export interface RegistroPayload {
   descricao: string
   data: string
   tipoRegistro: TipoRegistro
+  categoria: CategoriaRegistro
 }
 
 async function lerErro(response: Response, fallback: string) {

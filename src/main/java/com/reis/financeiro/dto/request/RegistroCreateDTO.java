@@ -1,6 +1,7 @@
 package com.reis.financeiro.dto.request;
 
 import com.reis.financeiro.entities.TipoRegistro;
+import com.reis.financeiro.entities.CategoriaRegistro;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ public class RegistroCreateDTO {
     private String descricao;
     @Enumerated(EnumType.STRING)
     private TipoRegistro tipoRegistro;
+    private CategoriaRegistro categoria;
 
 
 }

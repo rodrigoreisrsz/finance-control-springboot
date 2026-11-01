@@ -8,6 +8,8 @@ const links = [
   { to: '/registros/novo', label: 'Registros', icon: '⇄', hash: '' },
   { to: '/cofres', label: 'Cofres', icon: '▣', hash: '' },
   { to: '/relatorios', label: 'Relatórios', icon: '▥', hash: '' },
+  { to: '/orcamentos', label: 'Orçamentos', icon: '◉', hash: '' },
+  { to: '/recorrencias', label: 'Recorrências', icon: '↻', hash: '' },
   { to: '/configuracoes', label: 'Configurações', icon: '⚙', hash: '' },
 ]
 
@@ -27,6 +29,10 @@ function Sidebar() {
             ? location.pathname === '/cofres'
             : link.label === 'Relatórios'
               ? location.pathname === '/relatorios'
+              : link.label === 'Orçamentos'
+                ? location.pathname === '/orcamentos'
+                : link.label === 'Recorrências'
+                  ? location.pathname === '/recorrencias'
               : link.label === 'Configurações'
                 ? location.pathname === '/configuracoes'
                 : location.pathname === '/dashboard' && location.hash === link.hash
